@@ -92,10 +92,10 @@ input.addEventListener("keydown", (event) => {
   }
 });
 
-// const  getPicture = async () => {
-//     // const response = await fetch("/api/upload-picture");
-//     // const data = await response.json();
-//     console.log('data');
-//     // return data;
+const  getPicture = async () => {
+    const response = await fetch("/images/new");
+    const data = await response.json();
+    console.log('data');
+    return data;
 
-// };
+};

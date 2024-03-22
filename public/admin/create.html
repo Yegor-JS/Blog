@@ -19,7 +19,7 @@
         <button onclick="replaceTags(['<li>', '</li>', '<ol>\n', '\n</ol>', '<ul>\n', '\n</ul>','<ol>', '</ol>', '<ul>', '</ul>'], ['<p>', '</p>','','','','','','','',''])">Remove list</button>
 
         
-        <form method="POST" enctype="multipart/form-data" action="/images/new" onsubmit="console.log('hi')">
+        <form method="POST" enctype="multipart/form-data" onsubmit="getPicture()">
             <input type="submit" value="Insert an image" />
                 <div class="field">
                     <label>Image:</label>            
