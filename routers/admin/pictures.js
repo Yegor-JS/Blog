@@ -15,6 +15,7 @@ router.post(
     const name = req.file.originalname;
     const uploadedImage = await picturesRepo.create({ imageBody, name });
     const id = await uploadedImage.id;
+    console.log(req);
 
     picturesRepo.getOneBy({ id });
     res.send(id);

@@ -14,10 +14,9 @@ class ArticlesRepositories extends Repository {
     async create(attrs) {
         const gotAll = await this.getAll();
         attrs.id = this.randomId();
-        const oldBody = attrs.body
-        attrs.body = oldBody.replace(/<\/p>\r\n<p>/g, '</p><p>');
+        // const oldBody = attrs.body
+        // attrs.body = oldBody.replace(/<\/p>\r\n<p>/g, '</p><p>');
         gotAll.push(attrs);
-        console.log('created');
         await this.writeAll(gotAll);
     }
 }
