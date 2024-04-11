@@ -63,7 +63,7 @@ const makeList = (openingTag, closingTag) => {
 
 function safetify(threat) {
   return threat.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
+}
 
 const replaceTags = (oldTags, newTags) => {
   const { selectionStart, selectionEnd, inputValue } = defineInputs();
@@ -95,42 +95,43 @@ input.addEventListener("keydown", (event) => {
 
 // UPLOADING IMAGES
 
-const [uploadImageForm] = document.forms
+const [uploadImageForm] = document.forms;
 const form = new FormData(uploadImageForm);
-
+if (form.get("image")) {
   // OLDER CODE
 
-// uploadImageForm.onsubmit = function (event) {
-//   event.preventDefault()
+  // uploadImageForm.onsubmit = function (event) {
+  //   event.preventDefault()
 
-//   if (form.get("image")) {
-//   fetch('/images/new', {
-//     method: 'POST',
-//     body: form
-//   }).then(response => response.text())
-//     .then((id) => { insertIntoText(`\r\n{'picture id' : ${id} }\r\n`)
-//     })
-// }
-// }
+  //   if (form.get("image")) {
+  //   fetch('/images/new', {
+  //     method: 'POST',
+  //     body: form
+  //   }).then(response => response.text())
+  //     .then((id) => { insertIntoText(`\r\n{'picture id' : ${id} }\r\n`)
+  //     })
+  // }
+  // }
 
-uploadImageForm.onsubmit = async function (event) {
-  event.preventDefault()
-  try {
-    const form = new FormData(uploadImageForm);
-    if (form.get("image").size === 0) {
-      throw new Error("Please select an image file");
+  uploadImageForm.onsubmit = async function (event) {
+    event.preventDefault();
+    try {
+      const form = new FormData(uploadImageForm);
+      if (form.get("image").size === 0) {
+        throw new Error("Please select an image file");
+      }
+      const response = await fetch("/images/new", {
+        method: "POST",
+        body: form,
+      });
+      const text = await response.text();
+      if (!response.ok) {
+        const { status, statusText } = response;
+        throw new Error();
+      }
+      insertIntoText(`\r\n{'picture id' : ${text} }\r\n`);
+    } catch (err) {
+      throw new Error();
     }
-    const response = await fetch("/images/new", {
-      method: "POST",
-      body: form,
-    })
-    const text = await response.text()
-    if (!response.ok) {
-      const { status, statusText } = response;
-      throw new Error
-    }
-    insertIntoText(`\r\n{'picture id' : ${text} }\r\n`);
-  } catch (err) {
-    throw new Error
-  }
+  };
 }
