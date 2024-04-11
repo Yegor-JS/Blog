@@ -33,25 +33,23 @@ class ArticlesRepositories extends Repository {
   };
 
   async removePictures(text) {
+    // debugger;
    
-    // const regEx = /<figure>[\s\S]*?<img src="data:image\/png;base64,\s*(.+)"\/>[\s\S]*?<\/figure>/g;
-    const regEx = /<figure>/g;
-
+    const regEx = /<figure>[\s\S]*?<img src="data:image\/png;base64,\s*(.+)"\/>[\s\S]*?<\/figure>/g;
 
     let matches;
 
     while ((matches = regEx.exec(text)) !== null) {
-      // const body = matches[1];
-      // const picture = await picturesRepo.getOneBy({ body });
 
-      // const pictureId = `\r\n{'picture id' : ${picture.id} }\r\n`;
-      // const matchesRegExp = new RegExp(matches[0], "g")
-      // text = text.replace(matchesRegExp, pictureId);
+      const imageBody = matches[1];
+      const picture = await picturesRepo.getOneBy({ imageBody });
+
+      const pictureId = `\r\n{'picture id' : ${picture.id} }\r\n`;
+
+      const matchesRegExp = new RegExp(matches[0], "g")
+
+      text = text.replace(matchesRegExp, pictureId);
     }
-
-    console.log(matches)
-
-
     return text;
   };
 

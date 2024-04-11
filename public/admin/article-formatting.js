@@ -66,7 +66,6 @@ function safetify(threat) {
 };
 
 const replaceTags = (oldTags, newTags) => {
-
   const { selectionStart, selectionEnd, inputValue } = defineInputs();
   let targetString = inputValue.slice(selectionStart, selectionEnd);
   const arrayLength = oldTags.length;
