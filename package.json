@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon --inspect index.js",
+    "test": "node --test",
+    "tdd": "node --test --watch"
   },
   "keywords": [],
   "author": "",
