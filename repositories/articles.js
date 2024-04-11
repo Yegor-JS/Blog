@@ -38,6 +38,7 @@ class ArticlesRepositories extends Repository {
     const regEx = /<figure>[\s\S]*?<img src="data:image\/png;base64,\s*(.+)"\/>[\s\S]*?<\/figure>/g;
 
     let matches;
+    console.log(matches)
 
     while ((matches = regEx.exec(text)) !== null) {
 
@@ -46,10 +47,10 @@ class ArticlesRepositories extends Repository {
 
       const pictureId = `\r\n{'picture id' : ${picture.id} }\r\n`;
 
-      const matchesRegExp = new RegExp(matches[0], "g")
-
-      text = text.replace(matchesRegExp, pictureId);
+      // const matchesRegExp = new RegExp(matches[0], "g")
+      text = text.replace(matches[0], pictureId);
     }
+
     return text;
   };
 

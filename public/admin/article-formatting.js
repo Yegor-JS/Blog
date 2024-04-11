@@ -93,33 +93,44 @@ input.addEventListener("keydown", (event) => {
   }
 });
 
-// const  getPicture = async () => {
-//     // const response = await fetch("/api/upload-picture");
-//     // const data = await response.json();
-//     // return data;
+// UPLOADING IMAGES
 
-// };
+const [uploadImageForm] = document.forms
+const form = new FormData(uploadImageForm);
 
-// const image = async () => {
-//  return await picturesRepo.getOneBy({ id })
+  // OLDER CODE
+
+// uploadImageForm.onsubmit = function (event) {
+//   event.preventDefault()
+
+//   if (form.get("image")) {
+//   fetch('/images/new', {
+//     method: 'POST',
+//     body: form
+//   }).then(response => response.text())
+//     .then((id) => { insertIntoText(`\r\n{'picture id' : ${id} }\r\n`)
+//     })
+// }
 // }
 
-// const imageTag = (picture => `
-// <figure>
-// <img src="data:image/png;base64, ${picture.body}"/>
-// </figure>
-// `
-// )
-const [uploadImageForm] = document.forms
-
-uploadImageForm.onsubmit = function (event) {
+uploadImageForm.onsubmit = async function (event) {
   event.preventDefault()
-
-  // Sends form data asynchronously
-  fetch('/images/new', {
-    method: 'POST',
-    body: new FormData(uploadImageForm)
-  }).then(response => response.text())
-    .then((id) => { insertIntoText(`\r\n{'picture id' : ${id} }\r\n`)
+  try {
+    const form = new FormData(uploadImageForm);
+    if (form.get("image").size === 0) {
+      throw new Error("Please select an image file");
+    }
+    const response = await fetch("/images/new", {
+      method: "POST",
+      body: form,
     })
+    const text = await response.text()
+    if (!response.ok) {
+      const { status, statusText } = response;
+      throw new Error
+    }
+    insertIntoText(`\r\n{'picture id' : ${text} }\r\n`);
+  } catch (err) {
+    throw new Error
+  }
 }
