@@ -54,7 +54,6 @@ class ArticlesRepositories extends Repository {
   };
 
   
-
   // Тут мы получаем title и body в качестве attrs. В body есть \r\n. Заменить на </p> при нажатии на enter при сохранении? нажатии на enter?
   async create(attrs) {
     const gotAll = await this.getAll();
@@ -66,6 +65,19 @@ class ArticlesRepositories extends Repository {
 
     gotAll.push(attrs);
     await this.writeAll(gotAll);
+  }
+
+  async update(id, attrs) {
+    const records = await this.getAll();
+    const record = records.find((record) => record.id === id);
+
+    if (!record) {
+      throw new Error(`Item with id ${id} not found`);
+    }
+
+    attrs.body = await this.insertPictures(attrs.body);
+    Object.assign(record, attrs);
+    await this.writeAll(records);
   }
 }
 
