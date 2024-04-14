@@ -37,11 +37,11 @@ const makeList = (openingTag, closingTag) => {
   // these const values will be defined again. Not good
   const { selectionStart, selectionEnd, inputValue } = defineInputs();
 
-  const isAlreadyList = () => {
+  const isList = () => {
     const targetString = inputValue.slice(selectionStart, selectionEnd);
     return targetString.match(/<ul>|<\/ul>|<ol>|<\/ol>/);
   };
-  if (isAlreadyList()) {
+  if (isList()) {
     replaceTags(
       ["<p>", "</p>", "<ul>", "<ol>", "</ul>", "</ol>"],
       ["<li>", "</li>", openingTag, openingTag, closingTag, closingTag]
@@ -126,10 +126,10 @@ if (form.get("image")) {
       });
       const text = await response.text();
       if (!response.ok) {
-        const { status, statusText } = response;
+        // const { status, statusText } = response;
         throw new Error();
       }
-      insertIntoText(`\r\n{'picture id' : ${text} }\r\n`);
+      insertIntoText(`\r\n{picture id: ${text}}\r\n`);
     } catch (err) {
       throw new Error();
     }

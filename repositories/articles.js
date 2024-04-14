@@ -12,7 +12,7 @@ class ArticlesRepositories extends Repository {
   }
 
   async insertPictures(text) {
-    const regEx = /\{\s*'picture id'\s*:\s*([a-f0-9]+)\s*\}/g;
+    const regEx = /(?:\r\n)?{picture id:\s*([a-f0-9]+)\}(?:\r\n)?/g;
 
     let matches;
 
@@ -20,17 +20,16 @@ class ArticlesRepositories extends Repository {
       const id = matches[1];
       const picture = await picturesRepo.getOneBy({ id });
 
-      const pictureTag = `
-      <figure>
-      <img src="data:image/png;base64, ${picture.imageBody}"/>
-      </figure>
-      `;
+      const pictureTag = `<figure>\r\n<img src="data:image/png;base64, ${picture.imageBody}"/>\r\n</figure>`;
       const matchesRegExp = new RegExp(matches[0], "g")
       text = text.replace(matchesRegExp, pictureTag);
     }
 
     return text;
   };
+
+  // WHAT GETS INSERTED
+  //insertIntoText(`\r\n{picture id: ${text}}\r\n`);
 
   async removePictures(text) {
     // debugger;
@@ -44,7 +43,7 @@ class ArticlesRepositories extends Repository {
       const imageBody = matches[1];
       const picture = await picturesRepo.getOneBy({ imageBody });
 
-      const pictureId = `\r\n{'picture id' : ${picture.id} }\r\n`;
+      const pictureId = `\r\n{picture id: ${picture.id}}\r\n`;
 
       // const matchesRegExp = new RegExp(matches[0], "g")
       text = text.replaceAll(matches[0], pictureId);
