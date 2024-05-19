@@ -1,4 +1,5 @@
 module.exports = (article) => {
+
   const getComments = () => {
     const comments = article.comments;
     const displayCommentsHere = document.createElement("div");
@@ -12,6 +13,8 @@ module.exports = (article) => {
 
     return displayCommentsHere;
   };
+
+  console.log('hi')
 
   return `
     <!DOCTYPE html>
@@ -36,6 +39,7 @@ ${getComments()}
     placeholder="An interesting and respectful comment" name="body"></textarea><br><br>
 <button>Post</button>
 </form>
+
 
     </body>
     </html>

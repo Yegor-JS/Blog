@@ -1,5 +1,4 @@
 // Identify User
-
 let user = {};
 const indentifyUser = async () => {
   const response = await fetch("/api/identifyUser");

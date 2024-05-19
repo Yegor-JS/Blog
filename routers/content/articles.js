@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const displayArticle = require("../../views/content/article");
+const displayArticle = require("../../public/article");
 const articlesRepo = require("../../repositories/articles");
 
 router.get("/articles/:id", async (req, res) => {
@@ -22,7 +22,7 @@ router.post("/articles/:id", async (req, res) => {
     if (!changes.comments) {
       changes.comments = {};
     }
-    
+
     let commentCount = 1;
     commentCount += Object.keys(changes.comments).length;
 
