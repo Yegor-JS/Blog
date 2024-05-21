@@ -20,7 +20,6 @@ module.exports = ({ article }) => {
     <html lang="en">
     <head>
 
-    <script src="../displayComments.js"></script>
 
     </head>
     <body>
@@ -33,6 +32,8 @@ module.exports = ({ article }) => {
     <div>
 Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
 </div>
+${getComments(article)}
+
 <br><br>
 <form method="POST">
 <label for="body">Leave a comment:</label>
@@ -40,6 +41,7 @@ Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
     placeholder="An interesting and respectful comment" name="body"></textarea><br><br>
 <button>Post</button>
 </form>
+<script src="http://127.0.0.1:3000/displayComments.js"></script>
 
     </body>
     </html>
