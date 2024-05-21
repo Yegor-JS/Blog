@@ -1,25 +1,27 @@
-module.exports = (article) => {
+module.exports = ({ article }) => {
+  // console.log("hi");
 
-  const getComments = () => {
-    const comments = article.comments;
-    const displayCommentsHere = document.createElement("div");
+  // function getComments(article) {
+  //   const comments = article.comments;
+  //   const displayCommentsHere = document.createElement("div");
 
-    comments.forEach((comment) => {
-      const commentBody = document.createElement("div");
-      commentBody.innerHTML = comment.commentBody;
-      commentBody.className = `comment-${comments.indexOf(comment) + 1}`;
-      displayCommentsHere.appendChild(commentBody);
-    });
+  //   comments.forEach((comment) => {
+  //     const commentBody = document.createElement("div");
+  //     commentBody.innerHTML = comment.commentBody;
+  //     commentBody.className = `comment-${comments.indexOf(comment) + 1}`;
+  //     displayCommentsHere.appendChild(commentBody);
+  //   });
 
-    return displayCommentsHere;
-  };
-
-  console.log('hi')
+  //   return displayCommentsHere;
+  // }
 
   return `
     <!DOCTYPE html>
     <html lang="en">
     <head>
+
+    <script src="./displayComments.js"></script>
+
     </head>
     <body>
     <div>
@@ -31,7 +33,7 @@ module.exports = (article) => {
     <div>
 Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
 </div>
-${getComments()}
+${getComments(article)}
 <br><br>
 <form method="POST">
 <label for="body">Leave a comment:</label>
@@ -39,7 +41,6 @@ ${getComments()}
     placeholder="An interesting and respectful comment" name="body"></textarea><br><br>
 <button>Post</button>
 </form>
-
 
     </body>
     </html>

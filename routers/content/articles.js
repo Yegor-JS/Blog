@@ -6,7 +6,7 @@ const articlesRepo = require("../../repositories/articles");
 router.get("/articles/:id", async (req, res) => {
   const id = req.params.id;
   const article = await articlesRepo.getOneBy({ id });
-  res.send(displayArticle(article));
+  res.send(displayArticle({ article }));
 });
 
 // POSTING A COMMENT
