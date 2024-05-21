@@ -15,6 +15,15 @@ module.exports = ({ article }) => {
     <button onclick="tagSelectedText('<a href=LINK>', '</a>')">Hyperlink</button>
     <button onclick="tagSelectedText('<strike>', '</strike>')">Bold text TEST</button>
 
+    <form method="POST" enctype="multipart/form-data" action="/images/new">
+    <input type="submit" value="Insert an image" />
+        <div class="field">
+            <label>Image:</label>            
+            <input type="file" name="image" accept="image/png, image/jpeg"/>
+        </div>
+</form>
+
+
         <form method="POST">
             <label for="title">title</label>
             <input value="${article.title}"name="title"><br><br>
@@ -24,7 +33,7 @@ module.exports = ({ article }) => {
             <button>Save</button>
         </form>
     </div>
-    <script src="../../../admin/article-formatting.js"></script>
+    <script src="../../article-formatting.js"></script>
     </body>
     </html>
     `
