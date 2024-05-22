@@ -1,6 +1,6 @@
 function getComments(article) {
   console.log('hi')
-    const comments = article.comments;
+    const comments = Object.values(article.comments || {});
     const displayCommentsHere = document.createElement("div");
   
     comments.forEach((comment) => {

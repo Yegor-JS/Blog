@@ -32,7 +32,6 @@ module.exports = ({ article }) => {
     <div>
 Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
 </div>
-${getComments(article)}
 
 <br><br>
 <form method="POST">
@@ -42,6 +41,10 @@ ${getComments(article)}
 <button>Post</button>
 </form>
 <script src="http://127.0.0.1:3000/displayComments.js"></script>
+<script>
+    const htmlElementWithComments = getComments(${JSON.stringify(article)})
+    document.body.appendChild(htmlElementWithComments)
+</script>
 
     </body>
     </html>
