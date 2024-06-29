@@ -15,17 +15,20 @@ router.get("/articles/:id", async (req, res) => {
 // ADD VALIDATION THAT THERE'S A COMMENT TO ADD
 router.post("/articles/:id", requireAuth, async (req, res) => {
   try {
+    //ADD DATE
     const articleId = req.params.id;
     const changes = await articlesRepo.getOneBy({ id: articleId });
     const commentBody = req.body.comment;
     const commentId = articlesRepo.randomId();
     const commentDate = Date();
-
+    //ADD USERNAME
     const userId = req.session.userId;
     const user = await usersRepo.getOneBy({ id: userId });
     const { name } = user;
     const commentAuthor = name;
-
+    //ADD THE REST
+    const commentRating = { upvotes: 0, downvotes: 0 };
+    //PUSH
     if (!changes.comments) {
       changes.comments = {};
     }
@@ -38,6 +41,7 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
       commentId,
       commentDate,
       commentAuthor,
+      commentRating,
     };
 
     await articlesRepo.update(articleId, changes);
@@ -47,6 +51,21 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
 
   res.redirect(req.originalUrl);
 });
+
+//ADD RATING
+
+router.post(
+  "/articles/:articleId/comments/:commentId/upvote",
+  requireAuth,
+  async (req, res) => {
+    //ДОБАВИТЬ ИЗМЕНЕНИЕ РЕЙТИНГА СЮДА!!!
+    const articleId = req.params.articleId;
+    const commentId = req.params.commentId;
+    const comment = await articlesRepo.getCommentById(articleId, {commentId});
+    // console.log(comment)
+    res.status(204).send();
+  }
+);
 
 // router.post(
 //   "/admin/articles/:id/edit",

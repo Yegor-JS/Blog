@@ -32,15 +32,4 @@ router.post(
   }
 );
 
-router.post(
-  "/admin/articles/:id/delete",
-  requireAuth,
-  requireAdmin,
-  async (req, res) => {
-    const id = req.params.id;
-    await articlesRepo.delete(id);
-    res.redirect("/admin");
-  }
-);
-
 module.exports = router;

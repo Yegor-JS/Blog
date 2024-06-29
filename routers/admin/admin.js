@@ -27,6 +27,17 @@ router.get('/admin/articles/:id/edit', requireAuth, requireAdmin, async (req, re
 }
 );
 
+router.post(
+    "/admin/articles/:id/delete",
+    requireAuth,
+    requireAdmin,
+    async (req, res) => {
+      const id = req.params.id;
+      await articlesRepo.delete(id);
+      res.redirect("/admin");
+    }
+  );
+
 // router.get('/admin/articles/:id/edit', requireAuth, requireAdmin, async (req, res) => {
 //     const id = req.params.id;
 //     const article = await articlesRepo.getOneBy({ id });

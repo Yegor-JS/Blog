@@ -1,5 +1,4 @@
 module.exports = ({ article }) => {
-  // console.log("hi");
 
   // function getComments(article) {
   //   const comments = article.comments;
