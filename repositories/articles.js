@@ -94,11 +94,30 @@ class ArticlesRepositories extends Repository {
     return commentKey;
   }
 
-  async changeCommentRating(articleId, commentId, upvotesOrDownvotes) {
-    const article = await this.getOneBy({ id: articleId });
-    const comment = await this.getCommentKeyById(article, commentId);
+  async changeCommentRating(articleId, commentId, userId, upvotesOrDownvotes) {
     //upvotesOrDownvotes is expected to be either "upvotes" or "downvotes"
-    article.comments[comment].commentRating[upvotesOrDownvotes] += 1;
+
+    const article = await this.getOneBy({ id: articleId });
+    const commentKey = await this.getCommentKeyById(article, commentId);
+    const userVoted = {};
+    userVoted[userId] = upvotesOrDownvotes;
+
+    if (!article.comments[commentKey].commentRating.whoVoted) {
+      article.comments[commentKey].commentRating.whoVoted = {};
+    }
+
+    const whoVoted = article.comments[commentKey].commentRating.whoVoted;
+
+    if (!whoVoted[userId]) {
+      Object.assign(whoVoted, userVoted);
+      article.comments[commentKey].commentRating[upvotesOrDownvotes] += 1;
+    } else {
+      
+    }
+
+    // ВОТ ТУТ НАДО ПОДУМАТЬ
+    
+    
     const changes = article;
     return changes;
   }

@@ -13,7 +13,7 @@ const picturesRouter = require("./routers/admin/pictures");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieSession({ keys: ["36t45ergfd"] }));
+app.use(cookieSession({ keys: ["36t45ergfd"], maxAge: 24 * 60 * 60 * 10000 }));
 app.use(adminArticlesRouter);
 app.use(adminRouter);
 app.use(express.static("./public"));

@@ -58,11 +58,18 @@ router.post(
   "/articles/:articleId/comments/:commentId/vote",
   requireAuth,
   async (req, res) => {
-    //Мы получили нужный коммент. Как его изменить и вернуть в общую кучу?
     const articleId = req.params.articleId;
     const commentId = req.params.commentId;
-    const changes = await articlesRepo.changeCommentRating(articleId, commentId, req.query.rating)
-    articlesRepo.update(articleId, changes)
+
+    const userId = req.session.userId;
+
+    const changes = await articlesRepo.changeCommentRating(
+      articleId,
+      commentId,
+      userId,
+      req.query.rating
+    );
+    articlesRepo.update(articleId, changes);
     res.status(204).send();
   }
 );
