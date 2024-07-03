@@ -78,9 +78,6 @@ class ArticlesRepositories extends Repository {
     await this.writeAll(records);
   }
   async getCommentKeyById(article, commentId) {
-    // Раньше было так, но больше не нужно, кажется:
-    // async getCommentKeyById(articleId, commentId) {
-    // const article = await this.getOneBy({ id: articleId });
     const comments = article.comments;
     let commentKey;
     Object.keys(comments).forEach(function (key) {
@@ -99,44 +96,45 @@ class ArticlesRepositories extends Repository {
 
     const article = await this.getOneBy({ id: articleId });
     const commentKey = await this.getCommentKeyById(article, commentId);
-    const userVoted = {};
-    userVoted[userId] = upvotesOrDownvotes;
-
-    if (!article.comments[commentKey].commentRating.whoVoted) {
-      article.comments[commentKey].commentRating.whoVoted = {};
-    }
-
     const whoVoted = article.comments[commentKey].commentRating.whoVoted;
 
-    if (!whoVoted[userId]) {
-      Object.assign(whoVoted, userVoted);
-      article.comments[commentKey].commentRating[upvotesOrDownvotes] += 1;
+    const deleteElementFromArray = (source, elementToDelete) => {
+      const filteredVotes = source.filter(
+        (element) => element !== elementToDelete
+      );
+      return filteredVotes;
+    };
+
+    const isInAnyList = () => {
+      for (let obj in whoVoted) {
+        if (whoVoted[obj].includes(userId)) {
+          return true;
+        }
+      }
+      return false;
+    };
+
+    const isInTargetList = () => {
+      return whoVoted[upvotesOrDownvotes].includes(userId);
+    };
+    
+    if (isInTargetList()) {
+      whoVoted[upvotesOrDownvotes] = deleteElementFromArray(
+        whoVoted[upvotesOrDownvotes],
+        userId
+      );
+    } else if (isInAnyList) {
+      for (let obj in whoVoted) {
+        whoVoted[obj] = deleteElementFromArray(whoVoted[obj], userId);
+      }
+      whoVoted[upvotesOrDownvotes].push(userId);
     } else {
-      
+      whoVoted[upvotesOrDownvotes].push(userId);
     }
 
-    // ВОТ ТУТ НАДО ПОДУМАТЬ
-    
-    
     const changes = article;
     return changes;
   }
-
-  // OLD CODE
-  // async getCommentById(articleId, commentId) {
-  //   const article = await this.getOneBy({ id: articleId });
-  //   const comments = article.comments;
-  //   let comment;
-  //   Object.keys(comments).forEach(function (key) {
-  //     if (comments[key].commentId == commentId) {
-  //       comment = comments[key];
-  //     }
-  //   });
-  //   if (!comment) {
-  //     throw new Error(`Comment with id ${commentId} not found`);
-  //   }
-  //   return comment;
-  // }
 }
 
 module.exports = new ArticlesRepositories("articles.json");
