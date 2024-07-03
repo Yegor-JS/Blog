@@ -55,14 +55,14 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
 //ADD RATING
 
 router.post(
-  "/articles/:articleId/comments/:commentId/upvote",
+  "/articles/:articleId/comments/:commentId/vote",
   requireAuth,
   async (req, res) => {
-    //ДОБАВИТЬ ИЗМЕНЕНИЕ РЕЙТИНГА СЮДА!!!
+    //Мы получили нужный коммент. Как его изменить и вернуть в общую кучу?
     const articleId = req.params.articleId;
     const commentId = req.params.commentId;
-    const comment = await articlesRepo.getCommentById(articleId, {commentId});
-    // console.log(comment)
+    const changes = await articlesRepo.changeCommentRating(articleId, commentId, req.query.rating)
+    articlesRepo.update(articleId, changes)
     res.status(204).send();
   }
 );

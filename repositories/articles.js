@@ -77,59 +77,47 @@ class ArticlesRepositories extends Repository {
     Object.assign(record, attrs);
     await this.writeAll(records);
   }
-
-  async getCommentById(articleId, commentId) {
-    const article = await this.getOneBy({ id: articleId });
+  async getCommentKeyById(article, commentId) {
+    // Раньше было так, но больше не нужно, кажется:
+    // async getCommentKeyById(articleId, commentId) {
+    // const article = await this.getOneBy({ id: articleId });
     const comments = article.comments;
-    //ТУТ НЕ РАБОАТЕТ. посмотреть повнимательнее снипет, с ним может выйти
-
-    var obj = {
-      first: "John",
-      last: "Doe"
-    };
-    
-    //
-    //	Visit non-inherited enumerable keys
-    //
-    Object.keys(obj).forEach(function(key) {
-    
-      console.log(key, obj[key]);
-    
+    let commentKey;
+    Object.keys(comments).forEach(function (key) {
+      if (comments[key].commentId == commentId) {
+        commentKey = key;
+      }
     });
-
-    for (let comment in comments) {
-      console.log(comment.commentId);
-
-      let found = true;
-
-      for (let key in commentId) {
-        if (comment[key] !== commentId[key]) {
-          found = false;
-        }
-      }
-      if (found) {
-        return comment;
-      }
+    if (!commentKey) {
+      throw new Error(`Comment with id ${commentId} not found`);
     }
-
-    // async getOneBy(filters) {
-    //   const records = await this.getAll();
-
-    //   for (let record of records) {
-    //     let found = true;
-
-    //     for (let key in filters) {
-    //       if (record[key] !== filters[key]) {
-    //         found = false;
-    //       }
-    //     }
-
-    //     if (found) {
-    //       return record;
-    //     }
-    //   }
-    // }
+    return commentKey;
   }
+
+  async changeCommentRating(articleId, commentId, upvotesOrDownvotes) {
+    const article = await this.getOneBy({ id: articleId });
+    const comment = await this.getCommentKeyById(article, commentId);
+    //upvotesOrDownvotes is expected to be either "upvotes" or "downvotes"
+    article.comments[comment].commentRating[upvotesOrDownvotes] += 1;
+    const changes = article;
+    return changes;
+  }
+
+  // OLD CODE
+  // async getCommentById(articleId, commentId) {
+  //   const article = await this.getOneBy({ id: articleId });
+  //   const comments = article.comments;
+  //   let comment;
+  //   Object.keys(comments).forEach(function (key) {
+  //     if (comments[key].commentId == commentId) {
+  //       comment = comments[key];
+  //     }
+  //   });
+  //   if (!comment) {
+  //     throw new Error(`Comment with id ${commentId} not found`);
+  //   }
+  //   return comment;
+  // }
 }
 
 module.exports = new ArticlesRepositories("articles.json");

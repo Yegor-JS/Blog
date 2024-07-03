@@ -22,10 +22,10 @@ function getComments(article) {
     const rating = document.createElement("div");
     const commentId = comment.commentId;
     rating.innerHTML = `
-    <form method="POST" action="${currentUrl}/comments/${commentId}/upvote">
+    <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=upvotes">
                   <button >+</button>
                 </form>
-    <form method="POST" action="${currentUrl}/comments/${commentId}/downvote">
+    <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=downvotes">
                   <button >-</button>
                 </form>
                 `;
