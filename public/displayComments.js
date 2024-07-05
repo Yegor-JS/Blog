@@ -21,13 +21,18 @@ function getComments(article) {
     const currentUrl = window.location.href;
     const rating = document.createElement("div");
     const commentId = comment.commentId;
+    const whoVoted = comment.commentRating.whoVoted
+    const howManyUpvotes = whoVoted.upvotes.length
+    const howManyDownvotes = whoVoted.downvotes.length
     rating.innerHTML = `
     <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=upvotes">
                   <button >+</button>
                 </form>
+                <div>${howManyUpvotes}</div>
     <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=downvotes">
                   <button >-</button>
                 </form>
+                <div>${howManyDownvotes}</div>
                 `;
     displayCommentsHere.appendChild(rating);
 
