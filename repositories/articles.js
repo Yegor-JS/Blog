@@ -96,7 +96,7 @@ class ArticlesRepositories extends Repository {
 
     const article = await this.getOneBy({ id: articleId });
     const commentKey = await this.getCommentKeyById(article, commentId);
-    const whoVoted = article.comments[commentKey].commentRating.whoVoted;
+    const whoVoted = article.comments[commentKey].whoVoted;
 
     const deleteElementFromArray = (source, elementToDelete) => {
       const filteredVotes = source.filter(

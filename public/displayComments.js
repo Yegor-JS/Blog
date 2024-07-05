@@ -21,7 +21,7 @@ function getComments(article) {
     const currentUrl = window.location.href;
     const rating = document.createElement("div");
     const commentId = comment.commentId;
-    const whoVoted = comment.commentRating.whoVoted
+    const whoVoted = comment.whoVoted
     const howManyUpvotes = whoVoted.upvotes.length
     const howManyDownvotes = whoVoted.downvotes.length
     rating.innerHTML = `

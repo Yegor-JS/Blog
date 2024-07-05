@@ -26,8 +26,9 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
     const user = await usersRepo.getOneBy({ id: userId });
     const { name } = user;
     const commentAuthor = name;
-    //ADD THE REST
-    const commentRating = { upvotes: 0, downvotes: 0 };
+    //ADD RATING
+    const whoVoted = { upvotes: [], downvotes: [] };
+
     //PUSH
     if (!changes.comments) {
       changes.comments = {};
@@ -41,7 +42,7 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
       commentId,
       commentDate,
       commentAuthor,
-      commentRating,
+      whoVoted,
     };
 
     await articlesRepo.update(articleId, changes);
