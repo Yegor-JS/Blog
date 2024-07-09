@@ -1,6 +1,7 @@
 function getComments(article) {
   const comments = Object.values(article.comments || {});
   const displayCommentsHere = document.createElement("div");
+  const currentUrl = window.location.href;
 
   comments.forEach((comment) => {
     // Deal with date
@@ -17,8 +18,6 @@ function getComments(article) {
     displayCommentsHere.appendChild(commentDate);
 
     // Deal with rating
-
-    const currentUrl = window.location.href;
     const rating = document.createElement("div");
 
     const commentId = comment.commentId;
@@ -26,14 +25,14 @@ function getComments(article) {
     const howManyUpvotes = commentRating.upvotes.length;
     const howManyDownvotes = commentRating.downvotes.length;
     rating.innerHTML = `
-    <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=upvotes">
-                  <button class = "voting" id = "${commentId}">+</button>
+    <form method="POST">
+                  <button class = "upvotes" id = "${commentId}">+</button>
                 </form>
-                <div id = upvotes-count-${commentId} >${howManyUpvotes}</div>
-    <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=downvotes">
-                  <button class = "voting" id = "${commentId}" >-</button>
+                <div id = upvotes-count-${commentId}>${howManyUpvotes}</div>
+    <form method="POST">
+                  <button class = "downvotes" id = "${commentId}">-</button>
                 </form>
-                <div id = downvotes-count-${commentId} >${howManyDownvotes}</div>
+                <div id = downvotes-count-${commentId}>${howManyDownvotes}</div>
                 `;
     displayCommentsHere.appendChild(rating);
 
@@ -44,14 +43,14 @@ function getComments(article) {
     displayCommentsHere.appendChild(commentBody);
   });
 
-  ///
-  const voting = displayCommentsHere.getElementsByClassName("voting");
-  // console.log(voting)
+  // Make it change dynamically
+  const voting = displayCommentsHere.querySelectorAll(".upvotes, .downvotes");
   for (let element of voting) {
+    const commentId = element.id;
     element.addEventListener("click", async (event) => {
       event.preventDefault();
       const response = await fetch(
-        `/api/get-comment-rating/${element.id}/${article.id}`
+        `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
       const data = await response.json();
 
@@ -66,7 +65,6 @@ function getComments(article) {
       downvotesCount.innerHTML = data.downvotes.length;
     });
   }
-  // ///
 
   return displayCommentsHere;
 }

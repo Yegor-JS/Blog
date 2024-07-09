@@ -5,7 +5,6 @@ const article = require("../public/article");
 const router = express.Router();
 const { requireAuth } = require("./middlewares");
 
-
 const app = express();
 
 router.get("/api/getArticles", async (req, res) => {
@@ -29,9 +28,10 @@ router.get("/api/identifyUser", async (req, res) => {
   }
 });
 
-//
+// НЕ РАБОТАЕТ ПЕРЕАДРЕСАЦИЯ НА АВТОРИЗАЦИЮ
 router.get(
   "/articles/:articleId/comments/:commentId/vote",
+  requireAuth,
   async (req, res) => {
     const commentId = req.params.commentId;
     const articleId = req.params.articleId;
@@ -48,7 +48,7 @@ router.get(
 
     const commentKey = await articlesRepo.getCommentKeyById(article, commentId);
 
-    res.send(article.comments[commentKey].commentRating)
+    res.send(article.comments[commentKey].commentRating);
   }
 );
 
@@ -75,6 +75,5 @@ router.get(
 //     res.status(204).send();
 //   }
 // );
-
 
 module.exports = router;
