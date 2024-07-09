@@ -48,7 +48,8 @@ function getComments(article) {
   const voting = displayCommentsHere.getElementsByClassName("voting");
   // console.log(voting)
   for (let element of voting) {
-    element.addEventListener("click", async () => {
+    element.addEventListener("click", async (event) => {
+      event.preventDefault();
       const response = await fetch(
         `/api/get-comment-rating/${element.id}/${article.id}`
       );

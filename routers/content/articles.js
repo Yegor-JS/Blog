@@ -53,29 +53,6 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
   res.redirect(req.originalUrl);
 });
 
-//ADD RATING
-// ВОТ ЭТУ ХРЕНЬ НАДО ПОПРОБОВАТЬ ДЕЛАТЬ ЧЕРЕЗ API В ОДНО ДВИЖЕНИЕ, А НЕ ТУТ И API ПАРАЛЛЕЛЬНО В ДВА ДВИЖЕНИЯ
-router.post(
-  "/articles/:articleId/comments/:commentId/vote",
-  requireAuth,
-  async (req, res) => {
-    const articleId = req.params.articleId;
-    const commentId = req.params.commentId;
-
-    const userId = req.session.userId;
-
-    const changes = await articlesRepo.changeCommentRating(
-      articleId,
-      commentId,
-      userId,
-      req.query.rating
-    );
-    articlesRepo.update(articleId, changes);
-    // res.send(console.log('hi'));
-
-    res.status(204).send();
-  }
-);
 
 // router.post(
 //   "/admin/articles/:id/edit",
