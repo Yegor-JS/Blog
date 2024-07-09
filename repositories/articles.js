@@ -96,7 +96,7 @@ class ArticlesRepositories extends Repository {
 
     const article = await this.getOneBy({ id: articleId });
     const commentKey = await this.getCommentKeyById(article, commentId);
-    const whoVoted = article.comments[commentKey].whoVoted;
+    const commentRating = article.comments[commentKey].commentRating;
 
     const deleteElementFromArray = (source, elementToDelete) => {
       const filteredVotes = source.filter(
@@ -106,8 +106,8 @@ class ArticlesRepositories extends Repository {
     };
 
     const isInAnyList = () => {
-      for (let obj in whoVoted) {
-        if (whoVoted[obj].includes(userId)) {
+      for (let obj in commentRating) {
+        if (commentRating[obj].includes(userId)) {
           return true;
         }
       }
@@ -115,21 +115,21 @@ class ArticlesRepositories extends Repository {
     };
 
     const isInTargetList = () => {
-      return whoVoted[upvotesOrDownvotes].includes(userId);
+      return commentRating[upvotesOrDownvotes].includes(userId);
     };
     
     if (isInTargetList()) {
-      whoVoted[upvotesOrDownvotes] = deleteElementFromArray(
-        whoVoted[upvotesOrDownvotes],
+      commentRating[upvotesOrDownvotes] = deleteElementFromArray(
+        commentRating[upvotesOrDownvotes],
         userId
       );
     } else if (isInAnyList) {
-      for (let obj in whoVoted) {
-        whoVoted[obj] = deleteElementFromArray(whoVoted[obj], userId);
+      for (let obj in commentRating) {
+        commentRating[obj] = deleteElementFromArray(commentRating[obj], userId);
       }
-      whoVoted[upvotesOrDownvotes].push(userId);
+      commentRating[upvotesOrDownvotes].push(userId);
     } else {
-      whoVoted[upvotesOrDownvotes].push(userId);
+      commentRating[upvotesOrDownvotes].push(userId);
     }
 
     const changes = article;

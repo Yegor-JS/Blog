@@ -27,7 +27,7 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
     const { name } = user;
     const commentAuthor = name;
     //ADD RATING
-    const whoVoted = { upvotes: [], downvotes: [] };
+    const commentRating = { upvotes: [], downvotes: [] };
 
     //PUSH
     if (!changes.comments) {
@@ -42,7 +42,7 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
       commentId,
       commentDate,
       commentAuthor,
-      whoVoted,
+      commentRating,
     };
 
     await articlesRepo.update(articleId, changes);
@@ -54,7 +54,7 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
 });
 
 //ADD RATING
-
+// ВОТ ЭТУ ХРЕНЬ НАДО ПОПРОБОВАТЬ ДЕЛАТЬ ЧЕРЕЗ API В ОДНО ДВИЖЕНИЕ, А НЕ ТУТ И API ПАРАЛЛЕЛЬНО В ДВА ДВИЖЕНИЯ
 router.post(
   "/articles/:articleId/comments/:commentId/vote",
   requireAuth,
@@ -71,6 +71,8 @@ router.post(
       req.query.rating
     );
     articlesRepo.update(articleId, changes);
+    // res.send(console.log('hi'));
+
     res.status(204).send();
   }
 );

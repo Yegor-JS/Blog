@@ -20,19 +20,20 @@ function getComments(article) {
 
     const currentUrl = window.location.href;
     const rating = document.createElement("div");
+
     const commentId = comment.commentId;
-    const whoVoted = comment.whoVoted
-    const howManyUpvotes = whoVoted.upvotes.length
-    const howManyDownvotes = whoVoted.downvotes.length
+    const commentRating = comment.commentRating;
+    const howManyUpvotes = commentRating.upvotes.length;
+    const howManyDownvotes = commentRating.downvotes.length;
     rating.innerHTML = `
     <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=upvotes">
-                  <button >+</button>
+                  <button class = "voting" id = "${commentId}">+</button>
                 </form>
-                <div>${howManyUpvotes}</div>
+                <div id = upvotes-count-${commentId} >${howManyUpvotes}</div>
     <form method="POST" action="${currentUrl}/comments/${commentId}/vote?rating=downvotes">
-                  <button >-</button>
+                  <button class = "voting" id = "${commentId}" >-</button>
                 </form>
-                <div>${howManyDownvotes}</div>
+                <div id = downvotes-count-${commentId} >${howManyDownvotes}</div>
                 `;
     displayCommentsHere.appendChild(rating);
 
@@ -42,6 +43,29 @@ function getComments(article) {
     commentBody.className = `comment-${comments.indexOf(comment) + 1}`;
     displayCommentsHere.appendChild(commentBody);
   });
+
+  ///
+  const voting = displayCommentsHere.getElementsByClassName("voting");
+  // console.log(voting)
+  for (let element of voting) {
+    element.addEventListener("click", async () => {
+      const response = await fetch(
+        `/api/get-comment-rating/${element.id}/${article.id}`
+      );
+      const data = await response.json();
+
+      const upvotesCount = document.getElementById(
+        `upvotes-count-${element.id}`
+      );
+      upvotesCount.innerHTML = data.upvotes.length;
+
+      const downvotesCount = document.getElementById(
+        `downvotes-count-${element.id}`
+      );
+      downvotesCount.innerHTML = data.downvotes.length;
+    });
+  }
+  // ///
 
   return displayCommentsHere;
 }
