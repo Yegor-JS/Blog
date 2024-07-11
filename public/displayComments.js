@@ -43,7 +43,6 @@ function getComments(article) {
     displayCommentsHere.appendChild(commentBody);
   });
 
-  // Make it change dynamically
   const voting = displayCommentsHere.querySelectorAll(".upvotes, .downvotes");
   for (let element of voting) {
     const commentId = element.id;
@@ -52,17 +51,22 @@ function getComments(article) {
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
-      const data = await response.json();
+      // ЛОГИН ЗДЕСЬ НЕ РАБОТАЕТ ПОЧЕМУ-ТО
+      if (response.url.includes("/signin")) {
+        const data = await response.text();
+        document.body.innerHTML = data;
+      } else {
+        const data = await response.json();
+        const upvotesCount = document.getElementById(
+          `upvotes-count-${element.id}`
+        );
+        upvotesCount.innerHTML = data.upvotes.length;
 
-      const upvotesCount = document.getElementById(
-        `upvotes-count-${element.id}`
-      );
-      upvotesCount.innerHTML = data.upvotes.length;
-
-      const downvotesCount = document.getElementById(
-        `downvotes-count-${element.id}`
-      );
-      downvotesCount.innerHTML = data.downvotes.length;
+        const downvotesCount = document.getElementById(
+          `downvotes-count-${element.id}`
+        );
+        downvotesCount.innerHTML = data.downvotes.length;
+      }
     });
   }
 
