@@ -1,12 +1,11 @@
 const express = require("express");
 const articlesRepo = require("../repositories/articles");
 const usersRepo = require("../repositories/users");
-const article = require("../public/article");
 const router = express.Router();
-const { requireAuth } = require("./middlewares");
 
-const app = express();
+const { requireAuth } = require('./middlewares');
 
+//
 router.get("/api/getArticles", async (req, res) => {
   allArticles = await articlesRepo.getAll();
   res.send(allArticles);
