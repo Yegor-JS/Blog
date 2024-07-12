@@ -51,10 +51,9 @@ function getComments(article) {
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
-      // ЛОГИН ЗДЕСЬ НЕ РАБОТАЕТ ПОЧЕМУ-ТО
+      
       if (response.url.includes("/signin")) {
-        const data = await response.text();
-        document.body.innerHTML = data;
+        document.location.replace(response.url);
       } else {
         const data = await response.json();
         const upvotesCount = document.getElementById(

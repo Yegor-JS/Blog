@@ -5,16 +5,10 @@ const router = express.Router();
 
 const { requireAuth } = require('./middlewares');
 
-//
 router.get("/api/getArticles", async (req, res) => {
   allArticles = await articlesRepo.getAll();
   res.send(allArticles);
 });
-
-// router.get('/api/identifyUser', async (req, res) => {
-//     usersId = req.session.userId;
-//     res.send({ usersId });
-// });
 
 router.get("/api/identifyUser", async (req, res) => {
   if (req.session.userId) {
@@ -27,7 +21,6 @@ router.get("/api/identifyUser", async (req, res) => {
   }
 });
 
-// НЕ РАБОТАЕТ ПЕРЕАДРЕСАЦИЯ НА АВТОРИЗАЦИЮ
 router.get(
   "/articles/:articleId/comments/:commentId/vote",
   requireAuth,
@@ -50,29 +43,5 @@ router.get(
     res.send(article.comments[commentKey].commentRating);
   }
 );
-
-//ADD RATING
-// ВОТ ЭТУ ХРЕНЬ НАДО ПОПРОБОВАТЬ ДЕЛАТЬ ЧЕРЕЗ API В ОДНО ДВИЖЕНИЕ, А НЕ ТУТ И API ПАРАЛЛЕЛЬНО В ДВА ДВИЖЕНИЯ
-// router.post(
-//   "/articles/:articleId/comments/:commentId/vote",
-//   requireAuth,
-//   async (req, res) => {
-//     const articleId = req.params.articleId;
-//     const commentId = req.params.commentId;
-
-//     const userId = req.session.userId;
-
-//     const changes = await articlesRepo.changeCommentRating(
-//       articleId,
-//       commentId,
-//       userId,
-//       req.query.rating
-//     );
-//     articlesRepo.update(articleId, changes);
-//     // res.send(console.log('hi'));
-
-//     res.status(204).send();
-//   }
-// );
 
 module.exports = router;
