@@ -1,5 +1,4 @@
 module.exports = ({ article }) => {
-
   // function getComments(article) {
   //   const comments = article.comments;
   //   const displayCommentsHere = document.createElement("div");
