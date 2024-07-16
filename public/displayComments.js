@@ -33,6 +33,9 @@ function getComments(article) {
                   <button class = "downvotes" id = "${commentId}">-</button>
                 </form>
                 <div id = downvotes-count-${commentId}>${howManyDownvotes}</div>
+    <form method="POST" action='/admin/articles/${article.id}/comments/${commentId}/delete'>
+                  <button>delete</button>
+                </form>
                 `;
     displayCommentsHere.appendChild(rating);
 
@@ -51,7 +54,7 @@ function getComments(article) {
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
-      
+
       if (response.url.includes("/signin")) {
         document.location.replace(response.url);
       } else {

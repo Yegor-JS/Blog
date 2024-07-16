@@ -32,4 +32,28 @@ router.post(
   }
 );
 
+router.post(
+  "/admin/articles/:articleId/comments/:commentId/delete",
+  requireAuth,
+  requireAdmin,
+  async (req, res) => {
+    const articleId = req.params.articleId;
+    const commentId = req.params.commentId;
+    const changes = await articlesRepo.getOneBy({ id: articleId });
+    const commentKey = `comment-${commentId}`;
+
+    if (!changes.comments[commentKey]) {
+      return res.send("Could not find item");
+    }
+    delete changes.comments[commentKey];
+    // Этот catch нифига не ловит
+    try {
+      await articlesRepo.update(articleId, changes);
+    } catch (err) {
+      return res.send(err, "Could not find item");
+    }
+    res.redirect(`/articles/${articleId}`);
+  }
+);
+
 module.exports = router;

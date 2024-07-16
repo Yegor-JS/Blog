@@ -34,10 +34,9 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
       changes.comments = {};
     }
 
-    let commentCount = 1;
-    commentCount += Object.keys(changes.comments).length;
-
-    changes.comments["comment" + commentCount] = {
+    // РАНЬШЕ КЛЮЧ КОММЕНТАРИЯ НЕ СОДЕРЖАЛ В СЕБЕ ID. ТЕПЕРЬ СОДЕРЖИТ, И МОЖНО УПРОСТИТЬ ЛОГИКУ ПОИСКА НУЖНОГО КОММЕНТАРИЯ ПО ID, Т.К. ОН ТЕПЕРЬ СОДЕРЖИТСЯ В КЛЮЧЕ.
+    // В НЕКОТОРЫХ МЕСТАХ ЛОГИКА МОЖЕТ БЫТЬ ВСЕ ЕЩЕ СТАРОЙ. К ТОМУ ЖЕ НЕТ УВЕРЕННОСТИ, ЧТО МНЕ ВООБЩЕ НУЖНО ХРАНИТЬ ID САМ ПО СЕБЕ, ОТДЕЛЬНО ОТ КЛЮЧА
+    changes.comments["comment-" + commentId] = {
       commentBody,
       commentId,
       commentDate,
@@ -52,7 +51,6 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
 
   res.redirect(req.originalUrl);
 });
-
 
 // router.post(
 //   "/admin/articles/:id/edit",
