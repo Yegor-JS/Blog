@@ -1,4 +1,4 @@
-function getComments(article) {
+function getComments(article, user) {
   const comments = Object.values(article.comments || {});
   const displayCommentsHere = document.createElement("div");
   const currentUrl = window.location.href;
@@ -25,9 +25,8 @@ function getComments(article) {
     const howManyUpvotes = commentRating.upvotes.length;
     const howManyDownvotes = commentRating.downvotes.length;
 
-    // ДОДЕЛАТЬ!!!
     let deleteCommentsForAdmin = "";
-    if ('PLACEHOLDER') {
+    if (user !== undefined && user.hasOwnProperty('admin') && user.admin == true) {
       deleteCommentsForAdmin = `
     <form method="POST" action='/admin/articles/${article.id}/comments/${commentId}/delete'>
                   <button>delete</button>

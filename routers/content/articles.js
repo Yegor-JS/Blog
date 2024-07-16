@@ -8,7 +8,10 @@ const { requireAuth } = require("../middlewares");
 router.get("/articles/:id", async (req, res) => {
   const id = req.params.id;
   const article = await articlesRepo.getOneBy({ id });
-  res.send(displayArticle({ article }));
+  const userId = req.session.userId;
+  const user = await usersRepo.getOneBy({ id: userId });
+
+  res.send(displayArticle({ article, user }));
 });
 
 // POSTING A COMMENT
