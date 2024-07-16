@@ -45,7 +45,6 @@ Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
     const htmlElementWithComments = getComments(${JSON.stringify(article)})
     document.body.appendChild(htmlElementWithComments)
 </script>
-
     </body>
     </html>
     `;
