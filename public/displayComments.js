@@ -1,4 +1,4 @@
-function getComments(article) {
+function getComments(article, user) {
   const comments = Object.values(article.comments || {});
   const displayCommentsHere = document.createElement("div");
   const currentUrl = window.location.href;
@@ -24,6 +24,16 @@ function getComments(article) {
     const commentRating = comment.commentRating;
     const howManyUpvotes = commentRating.upvotes.length;
     const howManyDownvotes = commentRating.downvotes.length;
+
+    let deleteCommentsForAdmin = "";
+    if (user !== undefined && user.hasOwnProperty('admin') && user.admin == true) {
+      deleteCommentsForAdmin = `
+    <form method="POST" action='/admin/articles/${article.id}/comments/${commentId}/delete'>
+                  <button>delete</button>
+                </form>
+                `;
+    }
+
     rating.innerHTML = `
     <form method="POST">
                   <button class = "upvotes" id = "${commentId}">+</button>
@@ -33,9 +43,7 @@ function getComments(article) {
                   <button class = "downvotes" id = "${commentId}">-</button>
                 </form>
                 <div id = downvotes-count-${commentId}>${howManyDownvotes}</div>
-    <form method="POST" action='/admin/articles/${article.id}/comments/${commentId}/delete'>
-                  <button>delete</button>
-                </form>
+                ${deleteCommentsForAdmin}
                 `;
     displayCommentsHere.appendChild(rating);
 
@@ -51,6 +59,7 @@ function getComments(article) {
     const commentId = element.id;
     element.addEventListener("click", async (event) => {
       event.preventDefault();
+
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );

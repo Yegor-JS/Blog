@@ -46,7 +46,7 @@ router.post(
       return res.send("Could not find item");
     }
     delete changes.comments[commentKey];
-    // Этот catch нифига не ловит
+    // Этот catch нифига не ловит, как и многие другие. Это надо бы исправить вообще
     try {
       await articlesRepo.update(articleId, changes);
     } catch (err) {

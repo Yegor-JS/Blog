@@ -1,5 +1,4 @@
-module.exports = ({ article }) => {
-
+module.exports = ({ article, user }) => {
   // function getComments(article) {
   //   const comments = article.comments;
   //   const displayCommentsHere = document.createElement("div");
@@ -41,7 +40,7 @@ Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
 </form>
 <script src="http://127.0.0.1:3000/displayComments.js"></script>
 <script>
-    const htmlElementWithComments = getComments(${JSON.stringify(article)})
+    const htmlElementWithComments = getComments(${JSON.stringify(article)}, ${JSON.stringify(user)})
     document.body.appendChild(htmlElementWithComments)
 </script>
     </body>
