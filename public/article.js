@@ -1,18 +1,6 @@
 module.exports = ({ article, user }) => {
-  // function getComments(article) {
-  //   const comments = article.comments;
-  //   const displayCommentsHere = document.createElement("div");
-
-  //   comments.forEach((comment) => {
-  //     const commentBody = document.createElement("div");
-  //     commentBody.innerHTML = comment.commentBody;
-  //     commentBody.className = `comment-${comments.indexOf(comment) + 1}`;
-  //     displayCommentsHere.appendChild(commentBody);
-  //   });
-
-  //   return displayCommentsHere;
-  // }
-
+  const commentsList = Object.keys(article.comments);
+  const howManyComments = commentsList.length;
   return `
     <!DOCTYPE html>
     <html lang="en">
@@ -28,7 +16,7 @@ module.exports = ({ article, user }) => {
     ${article.body}
     </div>
     <div>
-Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
+Comments (${howManyComments}):
 </div>
 
 <br><br>
@@ -40,7 +28,9 @@ Comments (${"NUMBER OF COMMENTS, ADD VARIABLE LATER"}):
 </form>
 <script src="http://127.0.0.1:3000/displayComments.js"></script>
 <script>
-    const htmlElementWithComments = getComments(${JSON.stringify(article)}, ${JSON.stringify(user)})
+    const htmlElementWithComments = getComments(${JSON.stringify(
+      article
+    )}, ${JSON.stringify(user)})
     document.body.appendChild(htmlElementWithComments)
 </script>
     </body>
