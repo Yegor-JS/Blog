@@ -3,6 +3,17 @@ function getComments(article, user) {
   const displayCommentsHere = document.createElement("div");
   const currentUrl = window.location.href;
 
+  const signinToast = new Toastify({
+    text: "Only logged-in users can vote. Please, sign in",
+    gravity: "bottom",
+    position: "center",
+    destination: "/signin",
+    style: {
+      background: "#e14d45",
+    },
+    duration: 3000,
+  });
+
   comments.forEach((comment) => {
     // Deal with date
     const commentDate = document.createElement("div");
@@ -26,7 +37,11 @@ function getComments(article, user) {
     const howManyDownvotes = commentRating.downvotes.length;
 
     let deleteCommentsForAdmin = "";
-    if (user !== undefined && user.hasOwnProperty('admin') && user.admin == true) {
+    if (
+      user !== undefined &&
+      user.hasOwnProperty("admin") &&
+      user.admin == true
+    ) {
       deleteCommentsForAdmin = `
     <form method="POST" action='/admin/articles/${article.id}/comments/${commentId}/delete'>
                   <button>delete</button>
@@ -59,13 +74,12 @@ function getComments(article, user) {
     const commentId = element.id;
     element.addEventListener("click", async (event) => {
       event.preventDefault();
-
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
-
+// Response should contain an error instead of a link. Fix later, since there are several instances that will get affected by the change
       if (response.url.includes("/signin")) {
-        document.location.replace(response.url);
+        signinToast.showToast();
       } else {
         const data = await response.json();
         const upvotesCount = document.getElementById(

@@ -5,8 +5,7 @@ module.exports = ({ article, user }) => {
     <!DOCTYPE html>
     <html lang="en">
     <head>
-
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     </head>
     <body>
     <div>
@@ -27,6 +26,7 @@ Comments (${howManyComments}):
 <button>Post</button>
 </form>
 <script src="http://127.0.0.1:3000/displayComments.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
     const htmlElementWithComments = getComments(${JSON.stringify(
       article
