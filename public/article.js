@@ -19,7 +19,7 @@ Comments (${howManyComments}):
 </div>
 
 <br><br>
-<form method="POST">
+<form id="bodyInputForm" method="POST">
 <label id="bodyInputLabel" for="bodyInput">Leave a comment (2000 characters left):</label>
 <textarea id="bodyInput" style="height:400px;width:600px;font-size:14pt;"
     placeholder="An interesting and respectful comment" name="comment"></textarea><br><br>

@@ -99,7 +99,7 @@ function getComments(article, user) {
   return displayCommentsHere;
 }
 
-// Limiting comments size
+// Warning users about comments size
 const commentInput = document.getElementById("bodyInput");
 
 commentInput.addEventListener("keyup", () => {
@@ -110,16 +110,65 @@ commentInput.addEventListener("keyup", () => {
   stringWithCounter.innerHTML = `Leave a comment (${characterCounter} character${isPlural} left)`;
 });
 
-const commentForm = document.getElementById("compose-comment-button");
-commentForm.addEventListener("click", async (event) => {
+//Posting a comment
+
+// Preparing toasts
+function signInForCommentingToast() {
+  const toast = new Toastify({
+    text: "Only logged-in users can leave comments. Please, sign in",
+    gravity: "bottom",
+    position: "center",
+    destination: "/signin",
+    style: {
+      background: "#e14d45",
+    },
+    duration: 3000,
+  });
+  return toast.showToast();
+}
+
+function commentTooShortToast() {
+  const toast = new Toastify({
+    text: "Your comment must contain at least some characters",
+    gravity: "bottom",
+    position: "center",
+    style: {
+      background: "#e17145",
+    },
+    duration: 5000,
+  });
+  return toast.showToast();
+}
+
+function commentTooLongToast() {
+  const toast = new Toastify({
+    text: "Your comment is too long. Please, keep it no longer than 2000 characters",
+    gravity: "bottom",
+    position: "center",
+    style: {
+      background: "#e17145",
+    },
+    duration: 5000,
+  });
+  return toast.showToast();
+}
+
+//Limiting comment size
+const commentForm = document.getElementById("bodyInputForm");
+commentForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const [bodyInput] = document.forms;
-  const form = new FormData(bodyInput);
-
-  const response = await fetch(currentUrl, {
-    method: "POST",
-    body: form,
-  });
-  console.log(response);
+  const response = await fetch("/api/identifyUser");
+  const data = await response.json();
+  console.log(data)
+//Мы узнаем, залонинен ли пользователь, через api. Это хорошо бы изменить и сделать это знание универсальным по всему паблику. Возможно, через лучшие шаблоны
+  if (!data.name) {
+    signInForCommentingToast();
+  } else if (commentInput.value.length < 1) {
+    commentTooShortToast();
+  } else if (commentInput.value.length > 2000) {
+    commentTooLongToast();
+  } else {
+    commentForm.submit();
+  }
 });
