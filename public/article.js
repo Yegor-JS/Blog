@@ -20,12 +20,12 @@ Comments (${howManyComments}):
 
 <br><br>
 <form method="POST">
-<label for="body">Leave a comment:</label>
+<label id="bodyInputLabel" for="bodyInput">Leave a comment (2000 characters left):</label>
 <textarea id="bodyInput" style="height:400px;width:600px;font-size:14pt;"
     placeholder="An interesting and respectful comment" name="comment"></textarea><br><br>
 <button>Post</button>
 </form>
-<script src="http://127.0.0.1:3000/displayComments.js"></script>
+<script src="/displayComments.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
     const htmlElementWithComments = getComments(${JSON.stringify(

@@ -77,7 +77,7 @@ function getComments(article, user) {
       const response = await fetch(
         `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
       );
-// Response should contain an error instead of a link. Fix later, since there are several instances that will get affected by the change
+      // Response should contain an error instead of a link. Fix later, since there are several instances that will get affected by the change
       if (response.url.includes("/signin")) {
         signinToast.showToast();
       } else {
@@ -97,3 +97,13 @@ function getComments(article, user) {
 
   return displayCommentsHere;
 }
+
+const commentInput = document.getElementById("bodyInput");
+
+commentInput.addEventListener("keyup", () => {
+  const charactersLimit = 2000;
+  const characterCounter = charactersLimit - commentInput.value.length;
+  const isPlural = characterCounter == 1 || characterCounter == -1 ? "" : "s"
+  const stringWithCounter = document.getElementById("bodyInputLabel");
+  stringWithCounter.innerHTML = `Leave a comment (${characterCounter} character${isPlural} left)`;
+});
