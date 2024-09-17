@@ -1,7 +1,8 @@
+const currentUrl = window.location.href;
+
 function getComments(article, user) {
   const comments = Object.values(article.comments || {});
   const displayCommentsHere = document.createElement("div");
-  const currentUrl = window.location.href;
 
   const signinToast = new Toastify({
     text: "Only logged-in users can vote. Please, sign in",
@@ -98,12 +99,27 @@ function getComments(article, user) {
   return displayCommentsHere;
 }
 
+// Limiting comments size
 const commentInput = document.getElementById("bodyInput");
 
 commentInput.addEventListener("keyup", () => {
   const charactersLimit = 2000;
   const characterCounter = charactersLimit - commentInput.value.length;
-  const isPlural = characterCounter == 1 || characterCounter == -1 ? "" : "s"
+  const isPlural = characterCounter == 1 || characterCounter == -1 ? "" : "s";
   const stringWithCounter = document.getElementById("bodyInputLabel");
   stringWithCounter.innerHTML = `Leave a comment (${characterCounter} character${isPlural} left)`;
+});
+
+const commentForm = document.getElementById("compose-comment-button");
+commentForm.addEventListener("click", async (event) => {
+  event.preventDefault();
+
+  const [bodyInput] = document.forms;
+  const form = new FormData(bodyInput);
+
+  const response = await fetch(currentUrl, {
+    method: "POST",
+    body: form,
+  });
+  console.log(response);
 });

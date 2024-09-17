@@ -3,7 +3,7 @@ const router = express.Router();
 const displayArticle = require("../../public/article");
 const articlesRepo = require("../../repositories/articles");
 const usersRepo = require("../../repositories/users");
-const { requireAuth } = require("../middlewares");
+const { requireAuth, requireLength } = require("../middlewares");
 
 router.get("/articles/:id", async (req, res) => {
   const id = req.params.id;
@@ -16,7 +16,7 @@ router.get("/articles/:id", async (req, res) => {
 
 // POSTING A COMMENT
 // ADD VALIDATION THAT THERE'S A COMMENT TO ADD
-router.post("/articles/:id", requireAuth, async (req, res) => {
+router.post("/articles/:id", requireAuth, requireLength, async (req, res) => {
   try {
     //ADD DATE
     const articleId = req.params.id;
@@ -31,7 +31,6 @@ router.post("/articles/:id", requireAuth, async (req, res) => {
     const commentAuthor = name;
     //ADD RATING
     const commentRating = { upvotes: [], downvotes: [] };
-
     //PUSH
     if (!changes.comments) {
       changes.comments = {};

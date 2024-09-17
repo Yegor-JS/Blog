@@ -23,7 +23,7 @@ Comments (${howManyComments}):
 <label id="bodyInputLabel" for="bodyInput">Leave a comment (2000 characters left):</label>
 <textarea id="bodyInput" style="height:400px;width:600px;font-size:14pt;"
     placeholder="An interesting and respectful comment" name="comment"></textarea><br><br>
-<button>Post</button>
+<button id="compose-comment-button">Post</button>
 </form>
 <script src="/displayComments.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

@@ -18,6 +18,17 @@ module.exports = {
     next();
   },
 
+  async requireLength(req, res, next) {
+    const comment = req.body.comment;
+    if (comment.length < 1) {
+      return res.status(400).send({error: "Your comment must contain at least some characters"})
+    }
+    if (comment.length > 2000) {
+      return res.status(400).send({error: "Your comment is too long. Please, keep it no longer than 2000 characters"})
+    }
+    next();
+  },
+
   handleErrors(templateFunc, dataCb) {
     return async (req, res, next) => {
       const errors = validationResult(req);
