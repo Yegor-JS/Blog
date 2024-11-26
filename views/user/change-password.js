@@ -1,12 +1,9 @@
-const { getError } = require('../helpers');
+const layout = require("../layout");
+const { getError } = require("../helpers");
 
-
-module.exports = ({ errors }) => {
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    </head>
+module.exports = (user, { errors }) => {
+  return layout(user, {
+    content: `
     <body>
     <div class="container">
     <div class="columns is-centered">
@@ -16,18 +13,18 @@ module.exports = ({ errors }) => {
           <div class="field">
           <label class="label">Current password</label>
           <input class="input" placeholder="Password" name="password" type="password" />
-          <p>${getError(errors, 'password')}</p>
+          <p>${getError(errors, "password")}</p>
 
         </div>
           <div class="field">
             <label class="label">New password</label>
             <input class="input" placeholder="New Password" name="newPassword" type="password" />
-            <p>${getError(errors, 'newPassword')}</p>
+            <p>${getError(errors, "newPassword")}</p>
           </div>
           <div class="field">
             <label class="label">New password confirmation</label>
             <input class="input" placeholder="Password Confirmation" name="passwordConfirmation" type="password" />
-            <p>${getError(errors, 'passwordConfirmation')}</p>
+            <p>${getError(errors, "passwordConfirmation")}</p>
 
           </div>
           <button class="button is-primary">Submit</button>
@@ -37,6 +34,6 @@ module.exports = ({ errors }) => {
     </div>
   </div>
     </body>
-    </html>
-    `
-}
+    `,
+  });
+};

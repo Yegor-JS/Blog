@@ -1,6 +1,9 @@
-module.exports = ({ articles }) => {
-  const renderedArticles = articles.map(article => {
-    return `
+const layout = require("../layout");
+
+module.exports = (user, { articles }) => {
+  const renderedArticles = articles
+    .map((article) => {
+      return `
             <tr>
               <td>${article.title}</td>
                   <td>
@@ -17,10 +20,11 @@ module.exports = ({ articles }) => {
               </td>
             </tr>
           `;
-  })
-    .join('');
+    })
+    .join("");
 
-  return `
+  return layout(user, {
+    content: `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -49,7 +53,6 @@ module.exports = ({ articles }) => {
     </div>
     </body>
     </html>
-    `
+    `,
+  });
 };
-
-

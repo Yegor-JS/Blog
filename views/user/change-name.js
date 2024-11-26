@@ -1,8 +1,9 @@
-const { getError } = require('../helpers');
+const layout = require("../layout");
+const { getError } = require("../helpers");
 
-
-module.exports = ({ errors }) => {
-    return `
+module.exports = (user, { errors }) => {
+  return layout(user, {
+    content: `
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -16,7 +17,7 @@ module.exports = ({ errors }) => {
           <div class="field">
           <label class="label">Enter new username:</label>
           <input class="input" placeholder="your new username" name="name" type="name" />
-          <p>${getError(errors, 'name')}</p>
+          <p>${getError(errors, "name")}</p>
           <button>Submit</button>
         </form>
       </div>
@@ -27,5 +28,6 @@ module.exports = ({ errors }) => {
   </div>
     </body>
     </html>
-    `
-}
+    `,
+  });
+};

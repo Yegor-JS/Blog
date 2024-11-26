@@ -11,7 +11,11 @@ const { addLinesToArticle } = require('../../views/helpers');
 
 router.get("/admin", requireAuth, requireAdmin, async (req, res) => {
     const articles = await articlesRepo.getAll();
-    res.send(adminPanel({ articles }));
+
+    const userId = req.session.userId;
+    const user = await usersRepo.getOneBy({ id: userId });
+
+    res.send(adminPanel(user, { articles }));
 });
 
 router.get("/admin/create", requireAuth, requireAdmin, async (req, res) => {

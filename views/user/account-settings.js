@@ -1,9 +1,8 @@
-module.exports = () => {
-    return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    </head>
+const layout = require("../layout");
+
+module.exports = (user) => {
+  return layout(user, {
+    content: `
     <body>
 
     <div>
@@ -19,6 +18,6 @@ module.exports = () => {
     </div>
 
     </body>
-    </html>
-    `
-}
+    `,
+  });
+};
