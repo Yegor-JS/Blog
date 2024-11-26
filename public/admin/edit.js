@@ -1,10 +1,8 @@
-module.exports = ({ article }) => {
-    return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    </head>
-    <body>
+const layout = require("../../views/layout");
+
+module.exports = (user, { article }) => {
+  return layout(user, {
+    content: `
     <div>
 
     <button onclick="tagSelectedText('<h1>', '</h1>')">Header H1</button>
@@ -34,7 +32,7 @@ module.exports = ({ article }) => {
         </form>
     </div>
     <script src="../../article-formatting.js"></script>
-    </body>
     </html>
-    `
+    `,
+  });
 };

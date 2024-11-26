@@ -1,8 +1,9 @@
 const express = require('express');
 const articlesRepo = require('../../repositories/articles');
+const usersRepo = require('../../repositories/users')
 const router = express.Router();
 const adminPanel = require('../../views/admin/admin');
-// const postArticle = require('../../views/admin/create');
+const createArticle = require('../../public/admin/create');
 const editArticle = require('../../public/admin/edit');
 const { requireAuth, requireAdmin } = require('../middlewares');
 const path = require("path");
@@ -13,9 +14,14 @@ router.get("/admin", requireAuth, requireAdmin, async (req, res) => {
     res.send(adminPanel({ articles }));
 });
 
-router.get("/admin/create.html", requireAuth, requireAdmin, async (req, res) => {
-    const filePath = path.join(__dirname, "../../public/admin/create.html");
-    res.sendFile(filePath)
+router.get("/admin/create", requireAuth, requireAdmin, async (req, res) => {
+    // const filePath = path.join(__dirname, "../../public/admin/create");
+    // res.sendFile(filePath)
+
+    const userId = req.session.userId;
+    const user = await usersRepo.getOneBy({ id: userId });
+
+    res.send(createArticle(user));
 });
 
 router.get('/admin/articles/:id/edit', requireAuth, requireAdmin, async (req, res) => {
@@ -23,7 +29,11 @@ router.get('/admin/articles/:id/edit', requireAuth, requireAdmin, async (req, re
     const articleWithoutLines = await articlesRepo.getOneBy({ id });
     let article = addLinesToArticle(articleWithoutLines);
     article.body = await articlesRepo.removePictures(article.body)
-    res.send(editArticle({ article }));
+
+    const userId = req.session.userId;
+    const user = await usersRepo.getOneBy({ id: userId });
+
+    res.send(editArticle(user, { article }));
 }
 );
 

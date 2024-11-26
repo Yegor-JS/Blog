@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+const layout = require("../../views/layout");
 
-<head>
-</head>
-
-<body>
+module.exports = (user) => {
+  return layout(user, {
+    content: `
     <div>
         <button onclick="tagSelectedText('<h1>', '</h1>')">Header H1</button>
         <button onclick="tagSelectedText('<h2>', '</h2>')">Header H2</button>
@@ -26,13 +24,6 @@
                     <input type="file" name="image" accept="image/png, image/jpeg"/>
                 </div>
         </form>
-
-
-
-
-
-        
-
         <form method="POST">
             <label for="title">title</label>
             <input placeholder="A clear and precise title" name="title"><br><br>
@@ -43,6 +34,7 @@
         </form>
     </div>
     <script src="./article-formatting.js"></script>
-</body>
-
 </html>
+`,
+  });
+};

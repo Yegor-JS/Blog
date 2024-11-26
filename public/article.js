@@ -1,9 +1,11 @@
+const layout = require("../views/layout");
+
 module.exports = ({ article, user }) => {
   const commentsList = Object.keys(article.comments);
   const howManyComments = commentsList.length;
-  return `
-    <!DOCTYPE html>
-    <html lang="en">
+
+  return layout(user, {
+    content: `
     <head>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     </head>
@@ -35,5 +37,6 @@ Comments (${howManyComments}):
 </script>
     </body>
     </html>
-    `;
+    `,
+  });
 };

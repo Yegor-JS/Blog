@@ -5,7 +5,7 @@ const { requireAuth, requireAdmin } = require("../middlewares");
 const { removeLinesFromArticle } = require("../../views/helpers");
 
 router.post(
-  "/admin/create.html",
+  "/admin/create",
   requireAuth,
   requireAdmin,
   async (req, res) => {

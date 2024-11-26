@@ -1,5 +1,5 @@
-const layout = require('./layout');
-const { getError } = require('../helpers');
+const layout = require("../layout-bare");
+const { getError } = require("../helpers");
 
 module.exports = ({ errors }) => {
   return layout({
@@ -12,12 +12,12 @@ module.exports = ({ errors }) => {
               <div>
                 <label class="label">Email</label>
                 <input required class="input" placeholder="Email" name="email" />
-                <p>${getError(errors, 'email')}</p>
+                <p>${getError(errors, "email")}</p>
               </div>
               <div>
                 <label>Password</label>
                 <input required class="input" placeholder="Password" name="password" type="password" />
-                <p>${getError(errors, 'password')}</p>
+                <p>${getError(errors, "password")}</p>
               </div>
               <button>Submit</button>
             </form>
@@ -25,6 +25,6 @@ module.exports = ({ errors }) => {
           </div>
         </div>
       </div>
-    `
+    `,
   });
 };

@@ -42,7 +42,7 @@ module.exports = ({ articles }) => {
     </tbody>
   </table>
     <div>
-    <a href="/admin/create.html">create a new article</a>
+    <a href="/admin/create">create a new article</a>
     </div>
     <div>
     <a href="/user/change-password">change the password</a>
