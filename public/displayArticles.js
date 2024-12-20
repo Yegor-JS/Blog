@@ -1,41 +1,41 @@
-// Identify User
-let user = {};
-const indentifyUser = async () => {
-  const response = await fetch("/api/identifyUser");
-  const data = await response.json();
-  if (data.name) {
-    user = data;
-  }
-};
+// // Identify User
+// let user = {};
+// const indentifyUser = async () => {
+//   const response = await fetch("/api/identifyUser");
+//   const data = await response.json();
+//   if (data.name) {
+//     user = data;
+//   }
+// };
 
-const showUsersDetails = () => {
-  const displayUserInfo = document.getElementById("greetings");
-  const greetings = document.createElement("div");
+// const showUsersDetails = () => {
+//   const displayUserInfo = document.getElementById("greetings");
+//   const greetings = document.createElement("div");
 
-  if (user.name) {
-    // В БУДУЩЕМ НАДО БЫ СДЕЛАТЬ ДЛЯ ЭТОГО ВСЕГО ФУНКЦИЮ, А НЕ ДУБЛИРОВАТЬ КОД
-    // ПОРАБОТАТЬ С НАЗВАНИЯМИ ПЕРЕМЕННЫХ. НАПРИМЕР, SIGN OUT ОТНОСИТСЯ К ACCOUNTSETTINGS. НЕПОРЯДОК
-    greetings.innerHTML = `Hi, ${user.name}`;
-    displayUserInfo.appendChild(greetings);
+//   if (user.name) {
+//     // В БУДУЩЕМ НАДО БЫ СДЕЛАТЬ ДЛЯ ЭТОГО ВСЕГО ФУНКЦИЮ, А НЕ ДУБЛИРОВАТЬ КОД
+//     // ПОРАБОТАТЬ С НАЗВАНИЯМИ ПЕРЕМЕННЫХ. НАПРИМЕР, SIGN OUT ОТНОСИТСЯ К ACCOUNTSETTINGS. НЕПОРЯДОК
+//     greetings.innerHTML = `Hi, ${user.name}`;
+//     displayUserInfo.appendChild(greetings);
 
-    const accountSettings = document.createElement("div");
-    accountSettings.innerHTML =
-      '<a href="/account-settings"> account settings</a> <div><a href="/signout"> sign out</a></div>';
-    displayUserInfo.appendChild(accountSettings);
+//     const accountSettings = document.createElement("div");
+//     accountSettings.innerHTML =
+//       '<a href="/account-settings"> account settings</a> <div><a href="/signout"> sign out</a></div>';
+//     displayUserInfo.appendChild(accountSettings);
 
-    if (user.admin) {
-      const adminPanel = document.createElement("div");
-      adminPanel.innerHTML = '<a href="/admin"> go to admin panel</a>';
-      displayUserInfo.appendChild(adminPanel);
-    }
-  } else {
-    greetings.innerHTML = `
-            <div><a href="/signin"> sign in</a></div>
-            <div><a href="/signup"> sign up</a></div>
-            `;
-    displayUserInfo.appendChild(greetings);
-  }
-};
+//     if (user.admin) {
+//       const adminPanel = document.createElement("div");
+//       adminPanel.innerHTML = '<a href="/admin"> go to admin panel</a>';
+//       displayUserInfo.appendChild(adminPanel);
+//     }
+//   } else {
+//     greetings.innerHTML = `
+//             <div><a href="/signin"> sign in</a></div>
+//             <div><a href="/signup"> sign up</a></div>
+//             `;
+//     displayUserInfo.appendChild(greetings);
+//   }
+// };
 
 // Display Articles
 
@@ -75,4 +75,4 @@ const sortArticles = () => {
   });
 };
 
-getArticles().then(indentifyUser).then(showUsersDetails).then(sortArticles);
+getArticles().then(sortArticles);

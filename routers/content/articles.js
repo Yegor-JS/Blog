@@ -1,9 +1,19 @@
 const express = require("express");
 const router = express.Router();
+
 const displayArticle = require("../../public/article");
+const index = require("../../public/index");
+
 const articlesRepo = require("../../repositories/articles");
 const usersRepo = require("../../repositories/users");
 const { requireAuth, requireLength } = require("../middlewares");
+
+router.get("/", async (req, res) => {
+  const userId = req.session.userId;
+  const user = await usersRepo.getOneBy({ id: userId });
+
+  res.send(index(user));
+});
 
 router.get("/articles/:id", async (req, res) => {
   const id = req.params.id;

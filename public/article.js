@@ -36,7 +36,6 @@ Comments (${howManyComments}):
     document.body.appendChild(htmlElementWithComments)
 </script>
     </body>
-    </html>
     `,
   });
 };
