@@ -6,10 +6,6 @@ module.exports = ({ article, user }) => {
 
   return layout(user, {
     content: `
-    <head>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    </head>
-    <body>
     <div>
     ${article.title}
     </div>
@@ -35,7 +31,6 @@ Comments (${howManyComments}):
     )}, ${JSON.stringify(user)})
     document.body.appendChild(htmlElementWithComments)
 </script>
-    </body>
     `,
   });
 };

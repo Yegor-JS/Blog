@@ -1,5 +1,13 @@
 const currentUrl = window.location.href;
 
+// add Toaster to head
+const head = document.getElementsByTagName("head")[0];
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.type = "text/css";
+link.href = "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+head.appendChild(link);
+
 function getComments(article, user) {
   const comments = Object.values(article.comments || {});
   const displayCommentsHere = document.createElement("div");
@@ -160,8 +168,7 @@ commentForm.addEventListener("submit", async (event) => {
 
   const response = await fetch("/api/identifyUser");
   const data = await response.json();
-  console.log(data)
-//Мы узнаем, залонинен ли пользователь, через api. Это хорошо бы изменить и сделать это знание универсальным по всему паблику. Возможно, через лучшие шаблоны
+  //Мы узнаем, залонинен ли пользователь, через api. Это хорошо бы изменить и сделать это знание универсальным по всему паблику. Возможно, через лучшие шаблоны
   if (!data.name) {
     signInForCommentingToast();
   } else if (commentInput.value.length < 1) {

@@ -25,11 +25,6 @@ module.exports = (user, { articles }) => {
 
   return layout(user, {
     content: `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    </head>
-    <body>
     <div>
     <h1 class="subtitle">Articles</h1>  
   </div>
@@ -51,7 +46,6 @@ module.exports = (user, { articles }) => {
     <div>
     <a href="/user/change-password">change the password</a>
     </div>
-    </body>
     </html>
     `,
   });

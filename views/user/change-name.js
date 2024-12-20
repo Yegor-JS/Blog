@@ -4,10 +4,6 @@ const { getError } = require("../helpers");
 module.exports = (user, { errors }) => {
   return layout(user, {
     content: `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-    </head>
     <body>
     <div class="container">
     <div class="columns is-centered">
