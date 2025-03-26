@@ -14,8 +14,7 @@ module.exports = (user) => {
         <button onclick="makeList('<ul>', '</ul>')">List (bullets)</button>
         <button onclick="makeList('<ol>', '</ol>')">List (numeric)</button>
         <button onclick="replaceTags(['<p>', '</p>'], ['<li>', '</li>'])">Add list lines only</button>
-        <button onclick="replaceTags(['<li>', '</li>', '<ol>\n', '\n</ol>', '<ul>\n', '\n</ul>','<ol>', '</ol>', '<ul>', '</ul>'], ['<p>', '</p>','','','','','','','',''])">Remove list</button>
-
+        <button onclick="replaceTags(['<li>', '</li>', '<ol>\\n', '\\n</ol>', '<ul>\\n', '\\n</ul>','<ol>', '</ol>', '<ul>', '</ul>'], ['<p>', '</p>','','','','','','','',''])">Remove list</button>
         
         <form method="POST" enctype="multipart/form-data" action="/images/new">
             <input type="submit" value="Insert an image" />
