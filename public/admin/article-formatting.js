@@ -44,7 +44,7 @@ const makeList = (openingTag, closingTag) => {
   if (isList()) {
     replaceTags(
       ["<p>", "</p>", "<ul>", "<ol>", "</ul>", "</ol>"],
-      ["<li>", "</li>", openingTag, openingTag, closingTag, closingTag]
+      ["<li>", "</li>", openingTag, openingTag, closingTag, closingTag],
     );
   } else {
     input.value =
@@ -135,3 +135,64 @@ if (form.get("image")) {
     }
   };
 }
+
+// Youtube videos ID retrieval and embedding
+// Insert Youytube link or video ID
+
+const getYouTubeVideoId = (str) => {
+  const YoutubeIdRegExp = new RegExp("^[A-Za-z0-9_-]{11}$");
+
+  // Already an ID
+
+  if (YoutubeIdRegExp.test(str)) {
+    return str;
+  }
+
+  // Searching for the ID in the link
+
+  let url;
+
+  try {
+    url = new URL(str);
+  } catch {
+    return null;
+  }
+  // вероятно эта строчка тоже не нужна
+  // const host = url.hostname.toLowerCase();
+
+  // youtube.com/watch?v=id
+  const v = url.searchParams.get("v");
+  if (YoutubeIdRegExp.test(v)) {
+    return v;
+  }
+
+  // everything else
+
+  try {
+    const id = url.pathname
+      .split("/")
+      .filter((element) => element.match(YoutubeIdRegExp))[0];
+    return id;
+  } catch {
+    return null;
+  }
+};
+
+const embedYoutubeVideo = (linkOrID) => {
+  const { selectionStart, inputValue } = defineInputs();
+  let videoId = getYouTubeVideoId(linkOrID);
+  const youtubeVideoTag = `<iframe src=https://www.youtube.com/embed/${videoId}></iframe>`;
+  input.value =
+    inputValue.slice(0, selectionStart) +
+    youtubeVideoTag +
+    inputValue.slice(selectionStart);
+  input.selectionStart = input.selectionEnd =
+    input.selectionStart + youtubeVideoTag.length;
+
+  input.focus();
+};
+
+const requestYoutubeInfo = (str) => {
+  const userInput = prompt(str);
+  embedYoutubeVideo(userInput);
+};
