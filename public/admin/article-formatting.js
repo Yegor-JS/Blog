@@ -1,12 +1,34 @@
 const input = document.getElementById("bodyInput");
 
-function defineInputs() {
+// add Toaster to head
+const head = document.getElementsByTagName("head")[0];
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.type = "text/css";
+link.href = "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css";
+head.appendChild(link);
+
+// Preparing toasts
+function problemToast(errMsg) {
+  const toast = new Toastify({
+    text: `${errMsg}`,
+    gravity: "bottom",
+    position: "center",
+    style: {
+      background: "#e14d45",
+    },
+    duration: 3000,
+  });
+  return toast.showToast();
+}
+
+const defineInputs = () => {
   return {
     selectionStart: input.selectionStart,
     selectionEnd: input.selectionEnd,
     inputValue: input.value,
   };
-}
+};
 
 const insertIntoText = (insertThis) => {
   const { selectionStart, inputValue } = defineInputs();
@@ -61,9 +83,9 @@ const makeList = (openingTag, closingTag) => {
   }
 };
 
-function safetify(threat) {
+const safetify = (threat) => {
   return threat.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+};
 
 const replaceTags = (oldTags, newTags) => {
   const { selectionStart, selectionEnd, inputValue } = defineInputs();
@@ -155,7 +177,7 @@ const getYouTubeVideoId = (str) => {
   try {
     url = new URL(str);
   } catch {
-    return null;
+    return "null";
   }
 
   // youtube.com/watch?v=id
@@ -197,5 +219,18 @@ const requestYoutubeInfo = (str) => {
 
 const requestHyperlink = (str) => {
   const userInput = prompt(str);
+
+  if (userInput === null) {
+    return;
+  }
+
+  try {
+    let url;
+    url = new URL(userInput);
+  } catch {
+    problemToast("There is a problem with this URL");
+    return;
+  }
+
   tagSelectedText(`<a href="${userInput}">`, "</a>");
 };

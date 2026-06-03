@@ -5,7 +5,7 @@ const head = document.getElementsByTagName("head")[0];
 const link = document.createElement("link");
 link.rel = "stylesheet";
 link.type = "text/css";
-link.href = "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+link.href = "https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css";
 head.appendChild(link);
 
 function getComments(article, user) {
@@ -84,7 +84,7 @@ function getComments(article, user) {
     element.addEventListener("click", async (event) => {
       event.preventDefault();
       const response = await fetch(
-        `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`
+        `${currentUrl}/comments/${commentId}/vote?rating=${element.className}`,
       );
       // Response should contain an error instead of a link. Fix later, since there are several instances that will get affected by the change
       if (response.url.includes("/signin")) {
@@ -92,12 +92,12 @@ function getComments(article, user) {
       } else {
         const data = await response.json();
         const upvotesCount = document.getElementById(
-          `upvotes-count-${element.id}`
+          `upvotes-count-${element.id}`,
         );
         upvotesCount.innerHTML = data.upvotes.length;
 
         const downvotesCount = document.getElementById(
-          `downvotes-count-${element.id}`
+          `downvotes-count-${element.id}`,
         );
         downvotesCount.innerHTML = data.downvotes.length;
       }

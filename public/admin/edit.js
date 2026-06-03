@@ -37,6 +37,7 @@ module.exports = (user, { article }) => {
         </form>
     </div>
     <script src="../../article-formatting.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     </html>
     `,
   });
