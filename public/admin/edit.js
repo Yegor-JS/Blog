@@ -9,12 +9,12 @@ module.exports = (user, { article }) => {
         <button onclick="tagSelectedText('<h3>', '</h3>')">Header H3</button>
         <button onclick="tagSelectedText('<b>', '</b>')">Bold text</button>
         <button onclick="tagSelectedText('<i>', '</i>')">Italic</button>
-        <button onclick="tagSelectedText('<a href=LINK>', '</a>')">Hyperlink</button>
         <button onclick="tagSelectedText('<strike>', '</strike>')">Strikethrough</button>
         <button onclick="makeList('<ul>', '</ul>')">List (bullets)</button>
         <button onclick="makeList('<ol>', '</ol>')">List (numeric)</button>
         <button onclick="replaceTags(['<p>', '</p>'], ['<li>', '</li>'])">Add list lines only</button>
         <button onclick="replaceTags(['<li>', '</li>', '<ol>\n', '\n</ol>', '<ul>\n', '\n</ul>','<ol>', '</ol>', '<ul>', '</ul>'], ['<p>', '</p>','','','','','','','',''])">Remove list</button>
+        <button onclick="requestHyperlink('Enter URL address')">Hyperlink</button>
         <button onclick="requestYoutubeInfo('Enter Youtube video link or ID')">Embed YouTube video</button>
 
 

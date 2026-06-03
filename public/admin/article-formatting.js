@@ -148,7 +148,7 @@ const getYouTubeVideoId = (str) => {
     return str;
   }
 
-  // Searching for the ID in the link
+  // Searching for the ID in the URL
 
   let url;
 
@@ -157,8 +157,6 @@ const getYouTubeVideoId = (str) => {
   } catch {
     return null;
   }
-  // вероятно эта строчка тоже не нужна
-  // const host = url.hostname.toLowerCase();
 
   // youtube.com/watch?v=id
   const v = url.searchParams.get("v");
@@ -195,4 +193,9 @@ const embedYoutubeVideo = (linkOrID) => {
 const requestYoutubeInfo = (str) => {
   const userInput = prompt(str);
   embedYoutubeVideo(userInput);
+};
+
+const requestHyperlink = (str) => {
+  const userInput = prompt(str);
+  tagSelectedText(`<a href="${userInput}">`, "</a>");
 };
