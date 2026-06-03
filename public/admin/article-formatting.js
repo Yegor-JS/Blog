@@ -177,7 +177,8 @@ const getYouTubeVideoId = (str) => {
   try {
     url = new URL(str);
   } catch {
-    return "null";
+    problemToast("Can't recognise this link or ID");
+    return;
   }
 
   // youtube.com/watch?v=id
@@ -188,19 +189,21 @@ const getYouTubeVideoId = (str) => {
 
   // everything else
 
-  try {
-    const id = url.pathname
-      .split("/")
-      .filter((element) => element.match(YoutubeIdRegExp))[0];
+  const id = url.pathname
+    .split("/")
+    .filter((element) => element.match(YoutubeIdRegExp))[0];
+  if (id) {
     return id;
-  } catch {
-    return null;
+  } else {
+    problemToast("Can't recognise this link");
+    return;
   }
 };
 
 const embedYoutubeVideo = (linkOrID) => {
   const { selectionStart, inputValue } = defineInputs();
   let videoId = getYouTubeVideoId(linkOrID);
+  if (!videoId) return;
   const youtubeVideoTag = `<iframe src=https://www.youtube.com/embed/${videoId}></iframe>`;
   input.value =
     inputValue.slice(0, selectionStart) +
@@ -214,13 +217,17 @@ const embedYoutubeVideo = (linkOrID) => {
 
 const requestYoutubeInfo = (str) => {
   const userInput = prompt(str);
+
+  if (userInput === null || userInput.trim() === "") {
+    return;
+  }
   embedYoutubeVideo(userInput);
 };
 
 const requestHyperlink = (str) => {
   const userInput = prompt(str);
 
-  if (userInput === null) {
+  if (userInput === null || userInput.trim() === "") {
     return;
   }
 
