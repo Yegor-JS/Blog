@@ -7,7 +7,7 @@ class ArticlesRepositories extends Repository {
     return JSON.parse(
       await fs.promises.readFile(this.filename, {
         encode: "utf8",
-      })
+      }),
     );
   }
 
@@ -56,6 +56,7 @@ class ArticlesRepositories extends Repository {
   async create(attrs) {
     const gotAll = await this.getAll();
     attrs.id = this.randomId();
+    attrs.comments = {};
     let oldBody = attrs.body;
     oldBody = oldBody.replace(/<\/p>\r\n<p>/g, "</p><p>");
 
@@ -100,7 +101,7 @@ class ArticlesRepositories extends Repository {
 
     const deleteElementFromArray = (source, elementToDelete) => {
       const filteredVotes = source.filter(
-        (element) => element !== elementToDelete
+        (element) => element !== elementToDelete,
       );
       return filteredVotes;
     };
@@ -117,11 +118,11 @@ class ArticlesRepositories extends Repository {
     const isInTargetList = () => {
       return commentRating[upvotesOrDownvotes].includes(userId);
     };
-    
+
     if (isInTargetList()) {
       commentRating[upvotesOrDownvotes] = deleteElementFromArray(
         commentRating[upvotesOrDownvotes],
-        userId
+        userId,
       );
     } else if (isInAnyList) {
       for (let obj in commentRating) {
