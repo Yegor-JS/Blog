@@ -18,19 +18,22 @@ module.exports = (user, { article }) => {
         <button onclick="requestYoutubeInfo('Enter Youtube video link or ID')">Embed YouTube video</button>
 
 
-    <form method="POST" enctype="multipart/form-data" action="/images/new">
-    <input type="submit" value="Insert an image" />
-        <div class="field">
-            <label>Image:</label>            
-            <input type="file" name="image" accept="image/png, image/jpeg"/>
-        </div>
-</form>
+        <button onclick="postImage()">Post an image</button>
+
+        <input
+        type="file"
+        id="imageInput"
+        accept="image/png, image/jpeg"
+        style="display: none;"
+        >
+
+
 
 
         <form method="POST">
             <label for="title">title</label>
-            <input value="${article.title}"name="title"><br><br>
-            <label for="body">body</label>
+            <input id="title" value="${article.title}"name="title"><br><br>
+            <label for="bodyInput">body</label>
             <textarea id="bodyInput" style="height:400px;width:600px;font-size:14pt;"
                 name="body">${article.body}</textarea><br><br>
             <button>Save</button>
@@ -42,3 +45,24 @@ module.exports = (user, { article }) => {
     `,
   });
 };
+
+// Old form to upload an image. Replaced with a button
+
+// <form method="POST" enctype="multipart/form-data" action="/images/new">
+// <input type="submit" value="Insert an image" />
+//     <div class="field">
+//         <label>Image:</label>
+//         <input type="file" name="image" accept="image/png, image/jpeg"/>
+//     </div>
+// </form>
+
+// Old body nput form
+
+        // <form method="POST">
+        //     <label for="title">title</label>
+        //     <input value="${article.title}"name="title"><br><br>
+        //     <label for="body">body</label>
+        //     <textarea id="bodyInput" style="height:400px;width:600px;font-size:14pt;"
+        //         name="body">${article.body}</textarea><br><br>
+        //     <button>Save</button>
+        // </form>

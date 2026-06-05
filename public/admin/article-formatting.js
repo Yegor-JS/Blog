@@ -117,6 +117,26 @@ input.addEventListener("keydown", (event) => {
 
 // UPLOADING IMAGES
 
+
+// NEW STUFF
+
+const imageInput = document.getElementById("imageInput");
+
+const postImage = () => {
+  imageInput.click()
+}
+
+imageInput.addEventListener("change", async () => {
+  console.log(imageInput)
+const file = imageInput.files[0];
+if (!file)
+  return
+})
+
+
+
+//END OF NEW STUFF
+
 const [uploadImageForm] = document.forms;
 const form = new FormData(uploadImageForm);
 if (form.get("image")) {
