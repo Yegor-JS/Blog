@@ -117,66 +117,71 @@ input.addEventListener("keydown", (event) => {
 
 // UPLOADING IMAGES
 
-
 // NEW STUFF
 
 const imageInput = document.getElementById("imageInput");
 
 const postImage = () => {
-  imageInput.click()
-}
+  imageInput.click();
+  };
 
 imageInput.addEventListener("change", async () => {
-  console.log(imageInput)
-const file = imageInput.files[0];
-if (!file)
-  return
-})
+  console.log('hi')
+  const file = imageInput.files[0];
+  if (!file) return;
 
+  // !
+  try {
+    const form = new FormData();
+    form.append("image", file);
 
+    const response = await fetch("/images/new", {
+      method: "POST",
+      body: form,
+    });
+    const text = await response.text();
+
+    if (!response.ok) {
+      // const { status, statusText } = response;
+      throw new Error();
+    }
+    insertIntoText(`\r\n{picture id: ${text}}\r\n`);
+  } catch (err) {
+    throw new Error();
+  }
+});
 
 //END OF NEW STUFF
 
-const [uploadImageForm] = document.forms;
-const form = new FormData(uploadImageForm);
-if (form.get("image")) {
-  // OLDER CODE
+// START OF THE OLD CODE THAT I'M TRYING TO REPLACE
 
-  // uploadImageForm.onsubmit = function (event) {
-  //   event.preventDefault()
+// const [uploadImageForm] = document.forms;
+// const form = new FormData(uploadImageForm);
+// if (form.get("image")) {
+//   uploadImageForm.onsubmit = async function (event) {
+//     event.preventDefault();
+//     try {
+//       const form = new FormData(uploadImageForm);
+//       if (form.get("image").size === 0) {
+//         throw new Error("Please select an image file");
+//       }
+//       const response = await fetch("/images/new", {
+//         method: "POST",
+//         body: form,
+//       });
+//       const text = await response.text();
+//       if (!response.ok) {
+//         // const { status, statusText } = response;
+//         throw new Error();
+//       }
+//       insertIntoText(`\r\n{picture id: ${text}}\r\n`);
+//     } catch (err) {
+//       throw new Error();
+//     }
+//   };
+// }
 
-  //   if (form.get("image")) {
-  //   fetch('/images/new', {
-  //     method: 'POST',
-  //     body: form
-  //   }).then(response => response.text())
-  //     .then((id) => { insertIntoText(`\r\n{'picture id' : ${id} }\r\n`)
-  //     })
-  // }
-  // }
-
-  uploadImageForm.onsubmit = async function (event) {
-    event.preventDefault();
-    try {
-      const form = new FormData(uploadImageForm);
-      if (form.get("image").size === 0) {
-        throw new Error("Please select an image file");
-      }
-      const response = await fetch("/images/new", {
-        method: "POST",
-        body: form,
-      });
-      const text = await response.text();
-      if (!response.ok) {
-        // const { status, statusText } = response;
-        throw new Error();
-      }
-      insertIntoText(`\r\n{picture id: ${text}}\r\n`);
-    } catch (err) {
-      throw new Error();
-    }
-  };
-}
+// END OF THE OLD CODE THAT I'M TRYING TO REPLACE
 
 // Youtube videos ID retrieval and embedding
 // Insert Youytube link or video ID
