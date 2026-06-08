@@ -168,7 +168,7 @@ commentForm.addEventListener("submit", async (event) => {
 
   const response = await fetch("/api/identifyUser");
   const data = await response.json();
-  //Мы узнаем, залонинен ли пользователь, через api. Это хорошо бы изменить и сделать это знание универсальным по всему паблику. Возможно, через лучшие шаблоны
+  //Мы узнаем, залогинен ли пользователь, через api. Это хорошо бы изменить и сделать это знание универсальным по всему паблику. Возможно, через лучшие шаблоны
   if (!data.name) {
     signInForCommentingToast();
   } else if (commentInput.value.length < 1) {
