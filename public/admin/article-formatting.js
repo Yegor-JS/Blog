@@ -131,6 +131,21 @@ imageInput.addEventListener("change", async () => {
     const form = new FormData();
     form.append("image", file);
 
+    if (
+      form.get("image").type != "image/png" &&
+      form.get("image").type != "image/jpeg"
+    ) {
+      problemToast("Please, select an image file");
+      imageInput.value = "";
+      return;
+    }
+
+    if (form.get("image").size === 0) {
+      problemToast("This file seems empty");
+      imageInput.value = "";
+      return;
+    }
+
     const response = await fetch("/images/new", {
       method: "POST",
       body: form,
@@ -138,11 +153,15 @@ imageInput.addEventListener("change", async () => {
     const text = await response.text();
 
     if (!response.ok) {
+      problemToast("Something went wrong");
+      imageInput.value = "";
       // const { status, statusText } = response;
       throw new Error();
     }
     insertIntoText(`\r\n{picture id: ${text}}\r\n`);
   } catch (err) {
+    problemToast("Something went wrong");
+    imageInput.value = "";
     throw new Error();
   }
   imageInput.value = "";
