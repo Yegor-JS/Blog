@@ -85,7 +85,7 @@ module.exports = {
     //   };
     //   let ifSignatureMatches = false;
 
-    //   THE PROBLEM IS WE ONLY MUST MATCH THE FIRST 4 BYTES IF IT'S NOT A PNG, SO PROBABLY IT'S MORE EFFICIENT TO NOT ITERATE
+    //   THE PROBLEM IS WE MUST MATCH ONLY THE FIRST 4 BYTES IF IT'S NOT A PNG, SO PROBABLY IT'S MORE EFFICIENT TO NOT ITERATE
 
     //   const inputBuffer = image.buffer.subarray(0, 8);
 
