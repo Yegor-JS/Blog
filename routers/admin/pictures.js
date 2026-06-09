@@ -1,7 +1,7 @@
 const express = require("express");
 const picturesRepo = require("../../repositories/pictures");
 const router = express.Router();
-const { requireAuth, requireAdmin } = require("../middlewares");
+const { requireAuth, requireAdmin, requireImage } = require("../middlewares");
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -10,6 +10,7 @@ router.post(
   upload.single("image"),
   requireAuth,
   requireAdmin,
+  requireImage,
   async (req, res) => {
     const imageBody = req.file.buffer.toString("base64");
     const name = req.file.originalname;
@@ -23,7 +24,7 @@ router.post(
     //   await articlesRepo.create({ title, body });
     //   res.redirect("/admin");
     // }
-  }
+  },
 );
 
 // router.post(

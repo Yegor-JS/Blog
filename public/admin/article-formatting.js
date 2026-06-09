@@ -150,21 +150,18 @@ imageInput.addEventListener("change", async () => {
       method: "POST",
       body: form,
     });
-    const text = await response.text();
+    const { status, statusText } = response;
 
+    const text = await response.text();
     if (!response.ok) {
-      problemToast("Something went wrong");
-      imageInput.value = "";
-      // const { status, statusText } = response;
-      throw new Error();
+      throw new Error(statusText);
     }
     insertIntoText(`\r\n{picture id: ${text}}\r\n`);
-  } catch (err) {
-    problemToast("Something went wrong");
     imageInput.value = "";
-    throw new Error();
+  } catch (err) {
+    problemToast(err.message);
+    imageInput.value = "";
   }
-  imageInput.value = "";
 });
 
 //END OF NEW STUFF
